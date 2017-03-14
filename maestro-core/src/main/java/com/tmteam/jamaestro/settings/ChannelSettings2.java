@@ -7,6 +7,8 @@ import com.tmteam.jamaestro.api.HomeMode;
  * Created by Su on 14/03/17.
  */
 public class ChannelSettings2 {
+    public static  ChannelSettings2  DEFAULT = new ChannelSettings2();
+
     private ChannelMode channelMode = ChannelMode.SERVO;
     private HomeMode homeMode = HomeMode.OFF;
     private int home = 6000;        // 1500us
@@ -87,5 +89,36 @@ public class ChannelSettings2 {
 
     public int getAcceleration() {
         return acceleration;
+    }
+
+
+    public boolean isSimilarTo(ChannelSettings2 channelSettings){
+            if(this==channelSettings)
+                return true;
+
+            if(channelSettings==null)
+                return  false;
+
+            if(this.getHomeMode()!= channelSettings.getHomeMode())
+                return false;
+            if(this.getHome()!= channelSettings.getHome())
+                return false;
+            if(this.getChannelMode()!= channelSettings.getChannelMode())
+                return false;
+            if(this.getAcceleration()!= channelSettings.getAcceleration())
+                return false;
+            if(this.getMaximum()!= channelSettings.getMaximum())
+                return false;
+            if(this.getMinimum()!= channelSettings.getMinimum())
+                return false;
+            if(this.getNeutral()!= channelSettings.getNeutral())
+                return false;
+            if(this.getRange()!= channelSettings.getRange())
+                return false;
+            if(this.getSpeed()!= channelSettings.getSpeed())
+                return false;
+            return true;
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.tmteam.jamaestro.settings;
 
 import com.tmteam.jamaestro.api.HomeMode;
+import com.tmteam.jamaestro.api.SerialMode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,14 +22,56 @@ class SerializerTest {
         origin.setMinimum(10);
         origin.setHomeMode(HomeMode.GOTO);
 
-        String serialized = Serializer.serializeChannelSettings(origin);
+        String serialized = Serializer.serialize(origin);
 
         ChannelSettings2 restored = Serializer.deserializeChannelSettings(serialized);
 
-        Assertions.assertEquals(origin.getRange(), restored.getRange());
-        Assertions.assertEquals(origin.getMaximum(), restored.getMaximum());
-        Assertions.assertEquals(origin.getMinimum(), restored.getMinimum());
-        Assertions.assertEquals(origin.getHomeMode(), restored.getHomeMode());
+        Assertions.assertTrue(origin.isSimilarTo(restored));
+    }
+    @Test
+    void originAndDeserializedSettingsFields_areEqual(){
+        Settings2 origin = new Settings2();
 
+        origin.setBaudRate(100);
+        origin.setDeviceNumber(5);
+        origin.setEnableCrc(true);
+        origin.setMiniMaestroServoPeriod(42);
+        origin.setSerialMode(SerialMode.USB_CHAINED);
+
+        String serialized = Serializer.serialize(origin);
+
+        Settings2 restored = Serializer.deserializeSettings(serialized);
+
+        Assertions.assertTrue(origin.isSimilarTo(restored));
+    }
+
+    @Test
+    void originAndDeserializedSettingsChannels_areEqual(){
+        Settings2 origin = new Settings2();
+
+
+        ChannelSettings2 channel1 = new ChannelSettings2();
+
+        channel1.setRange(100);
+        channel1.setMaximum(1000);
+        channel1.setMinimum(10);
+        channel1.setHomeMode(HomeMode.GOTO);
+
+
+        ChannelSettings2 channel2 = new ChannelSettings2();
+
+        channel2.setRange(100);
+        channel2.setMaximum(1000);
+        channel2.setMinimum(10);
+        channel2.setHomeMode(HomeMode.GOTO);
+
+        origin.AddChannel(1, channel1);
+        origin.AddChannel(2, channel2);
+
+        String serialized = Serializer.serialize(origin);
+
+        Settings2 restored = Serializer.deserializeSettings(serialized);
+
+        Assertions.assertTrue(origin.isSimilarTo(restored));
     }
 }
