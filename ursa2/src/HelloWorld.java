@@ -3,14 +3,19 @@ import com.tmteam.jamaestro.MaestroServoController;
 import com.tmteam.jamaestro.api.ChannelMode;
 import com.tmteam.jamaestro.api.Product;
 import com.tmteam.jamaestro.binding.DriverBinding;
-import com.tmteam.jamaestro.settings.ChannelSettings;
-import com.tmteam.jamaestro.settings.Settings;
+import com.tmteam.jamaestro.settings.*;
+
+import java.io.IOException;
 
 /**
  * Created by Su on 11/03/17.
  */
 public class HelloWorld {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+
+        Settings2 settings = Serializer.readSettings("set.json");
+
 
         Product mini24 = Product.MINI24;
 
@@ -23,51 +28,20 @@ public class HelloWorld {
             return;
         }
 
-        ChannelSettings channelSettings = ChannelSettings.builder()
-                .setChannelMode(ChannelMode.SERVO)
-                .setMinimum(1500)
-                .setMaximum(10000)
-              //  .setRange(10000)
-              //  .setNeutral(3600)
-                .build();
-
-
-        Settings settings = Settings
-                .builder()
-                .addChannel(1, channelSettings)
-                .build();
-
 
         MaestroServoController controller = new MaestroServoController(driver,settings);
-        //controller.resetTarget(1);
+
         controller.setAcceleration(1, 0);
-
         controller.setSpeed(1, 0);
+        controller.setTarget(1, settings.getChannel(1).getMinimum());
+        Thread.sleep(2000);                 //1000 milliseconds is one second.
 
-        controller.setTarget(1, channelSettings.getMinimum());
-        try {
-            Thread.sleep(2000);                 //1000 milliseconds is one second.
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
         controller.setAcceleration(1, 1);
 
         controller.setSpeed(1, 40);
-        controller.setTarget(1, channelSettings.getMaximum());
+        controller.setTarget(1, settings.getChannel(1).getMaximum());
 
-        /*
-        for (int i = channelSettings.getMinimum(); i< channelSettings.getMaximum(); i+=500) {
-            System.out.println(i);
-            controller.setTarget(1, i);
-            try {
-                Thread.sleep(500);                 //1000 milliseconds is one second.
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-        }
 
-        controller.setTarget(1, 2000);
-*/
         System.out.println("Wait");
         //System.console().readLine();
         // Display "Hello World!"

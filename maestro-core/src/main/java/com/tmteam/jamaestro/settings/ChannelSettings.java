@@ -1,8 +1,6 @@
 package com.tmteam.jamaestro.settings;
 
-import com.tmteam.jamaestro.api.ChannelMode;
-import com.tmteam.jamaestro.api.HomeMode;
-
+/*
 public class ChannelSettings {
 
     public static final ChannelSettings DEFAULT_SETTINGS = ChannelSettings.builder().build();
@@ -214,4 +212,4 @@ public class ChannelSettings {
                 ", acceleration=" + acceleration +
                 '}';
     }
-}
+}*/

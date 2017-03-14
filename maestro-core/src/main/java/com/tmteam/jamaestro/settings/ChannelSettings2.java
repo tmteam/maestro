@@ -7,8 +7,27 @@ import com.tmteam.jamaestro.api.HomeMode;
  * Created by Su on 14/03/17.
  */
 public class ChannelSettings2 {
-    public static  ChannelSettings2  DEFAULT = new ChannelSettings2();
 
+    public static  ChannelSettings2  CreateDefault(){return  new ChannelSettings2();}
+    private static byte normalSpeedToExponentialSpeed(int mantissa) {
+        byte exponent = 0;
+
+        while (true) {
+            if (mantissa < 32) {
+                // We have reached the correct representation.
+                return (byte) (exponent + (mantissa << 3));
+            }
+
+            if (exponent == 7) {
+                // The number is too big to express in this format.
+                return (byte) 0xFF;
+            }
+
+            // Try representing the number with a bigger exponent.
+            exponent += 1;
+            mantissa >>= 1;
+        }
+    }
     private ChannelMode channelMode = ChannelMode.SERVO;
     private HomeMode homeMode = HomeMode.OFF;
     private int home = 6000;        // 1500us
@@ -18,7 +37,15 @@ public class ChannelSettings2 {
     private int range = 1905;       // 2000;       // 500us
     private int speed = 0;          // unlimited
     private int acceleration = 0;   // unlimited
+    private String name = "unnamed";
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
     public void setChannelMode(ChannelMode channelMode) {
         this.channelMode = channelMode;
     }
@@ -89,6 +116,10 @@ public class ChannelSettings2 {
 
     public int getAcceleration() {
         return acceleration;
+    }
+
+    public byte getExponentialSpeed() {
+        return ChannelSettings2.normalSpeedToExponentialSpeed(speed);
     }
 
 

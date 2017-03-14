@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.tmteam.jamaestro.api.SerialMode;
 
 import java.util.Map;
-
+/*
 public class Settings {
 
     public static final Settings DEFAULT_SETTINGS = Settings.builder().build();
@@ -304,4 +304,4 @@ public class Settings {
                 ", channels=" + channels +
                 '}';
     }
-}
+}*/

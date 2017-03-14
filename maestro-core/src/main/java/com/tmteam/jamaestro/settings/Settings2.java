@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Settings2 {
 
-    public static Settings2 DEFAULT = new Settings2();
+    public static Settings2 CreateDefault(){return new Settings2();}
 
     public static int frequencyToPeriod(double hertz, int servos) {
         return (int) (hertz / (servos * (256D / 12D)));
@@ -21,7 +21,6 @@ public class Settings2 {
     public byte getServoMultiplier() {
         return servoMultiplier;
     }
-
 
     // The number of servo ports available. This, along with the servoPeriod, determine the "maximum pulse width".
     private int servosAvailable;
@@ -160,7 +159,7 @@ public class Settings2 {
 
     public ChannelSettings2 getChannel(int port) {
         if (!channels.containsKey(port))
-            return ChannelSettings2.DEFAULT;
+            return ChannelSettings2.CreateDefault();
 
         return channels.get(port);
     }
@@ -277,4 +276,5 @@ public class Settings2 {
         }
         return true;
     }
+
 }

@@ -1,0 +1,52 @@
+{
+  "servosAvailable": 0,
+  "servoPeriod": 0,
+  "baudRate": 0,
+  "servoMultiplier": 0,
+  "miniMaestroServoPeriod": 0,
+  "enableCrc": false,
+  "neverSuspend": false,
+  "deviceNumber": 0,
+  "miniSscOffset": 0,
+  "timeout": 0,
+  "scriptDone": false,
+  "enablePullups": false,
+  "channels": {
+    "0": {
+      "channelMode": "SERVO",
+      "homeMode": "OFF",
+      "home": 6000,
+      "minimum": 3968,
+      "maximum": 8000,
+      "neutral": 6000,
+      "range": 1905,
+      "speed": 0,
+      "acceleration": 0,
+      "name": "smallServo"
+    },
+    "1": {
+      "channelMode": "SERVO",
+      "homeMode": "OFF",
+      "home": 6000,
+      "minimum": 1500,
+      "maximum": 10000,
+      "neutral": 6000,
+      "range": 1905,
+      "speed": 0,
+      "acceleration": 0,
+      "name": "bigServo"
+    },
+    "2": {
+      "channelMode": "SERVO",
+      "homeMode": "OFF",
+      "home": 6000,
+      "minimum": 3968,
+      "maximum": 8000,
+      "neutral": 6000,
+      "range": 1905,
+      "speed": 0,
+      "acceleration": 0,
+      "name": "unnamed"
+    }
+  }
+}

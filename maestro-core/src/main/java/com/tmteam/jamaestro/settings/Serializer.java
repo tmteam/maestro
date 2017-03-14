@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 public class Serializer {
 
-    public Settings2 readSettings(String jsonPath) throws IOException {
+    public static Settings2 readSettings(String jsonPath) throws IOException {
 
         String text;
 
@@ -24,8 +24,8 @@ public class Serializer {
         text = new String(Files.readAllBytes(path));
         return  deserializeSettings(text);
     }
-    public void write(String jsonPath, Settings settings) throws IOException {
-        String text = serialize(settings);
+    public static void write(String jsonPath, Object obj) throws IOException {
+        String text = serialize(obj);
         Files.write(Paths.get(jsonPath), text.getBytes());
     }
     public static  Settings2 deserializeSettings(String json){
