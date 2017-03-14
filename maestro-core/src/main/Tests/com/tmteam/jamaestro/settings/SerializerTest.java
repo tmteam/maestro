@@ -5,17 +5,13 @@ import com.tmteam.jamaestro.api.SerialMode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import sun.jvm.hotspot.utilities.Assert;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Created by Su on 14/03/17.
  */
 class SerializerTest {
     @Test
     void originAndDeserializedChannelSettings_areEqual(){
-        ChannelSettings2 origin = new ChannelSettings2();
+        ChannelSettings origin = new ChannelSettings();
 
         origin.setRange(100);
         origin.setMaximum(1000);
@@ -24,13 +20,13 @@ class SerializerTest {
 
         String serialized = Serializer.serialize(origin);
 
-        ChannelSettings2 restored = Serializer.deserializeChannelSettings(serialized);
+        ChannelSettings restored = Serializer.deserializeChannelSettings(serialized);
 
         Assertions.assertTrue(origin.isSimilarTo(restored));
     }
     @Test
     void originAndDeserializedSettingsFields_areEqual(){
-        Settings2 origin = new Settings2();
+        Settings origin = new Settings();
 
         origin.setBaudRate(100);
         origin.setDeviceNumber(5);
@@ -40,17 +36,17 @@ class SerializerTest {
 
         String serialized = Serializer.serialize(origin);
 
-        Settings2 restored = Serializer.deserializeSettings(serialized);
+        Settings restored = Serializer.deserializeSettings(serialized);
 
         Assertions.assertTrue(origin.isSimilarTo(restored));
     }
 
     @Test
     void originAndDeserializedSettingsChannels_areEqual(){
-        Settings2 origin = new Settings2();
+        Settings origin = new Settings();
 
 
-        ChannelSettings2 channel1 = new ChannelSettings2();
+        ChannelSettings channel1 = new ChannelSettings();
 
         channel1.setRange(100);
         channel1.setMaximum(1000);
@@ -58,7 +54,7 @@ class SerializerTest {
         channel1.setHomeMode(HomeMode.GOTO);
 
 
-        ChannelSettings2 channel2 = new ChannelSettings2();
+        ChannelSettings channel2 = new ChannelSettings();
 
         channel2.setRange(100);
         channel2.setMaximum(1000);
@@ -70,7 +66,7 @@ class SerializerTest {
 
         String serialized = Serializer.serialize(origin);
 
-        Settings2 restored = Serializer.deserializeSettings(serialized);
+        Settings restored = Serializer.deserializeSettings(serialized);
 
         Assertions.assertTrue(origin.isSimilarTo(restored));
     }

@@ -4,8 +4,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.tmteam.jamaestro.api.*;
 import com.tmteam.jamaestro.binding.DriverBinding;
-import com.tmteam.jamaestro.settings.ChannelSettings2;
-import com.tmteam.jamaestro.settings.Settings2;
+import com.tmteam.jamaestro.settings.ChannelSettings;
+import com.tmteam.jamaestro.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,13 +44,13 @@ public class MaestroServoController implements Closeable {
     protected final String serialNumber;
     protected final String firmwareVersion;
 
-    protected Settings2 settings;
+    protected Settings settings;
 
     public MaestroServoController(DriverBinding driver) {
-        this (driver, Settings2.CreateDefault());
+        this (driver, Settings.CreateDefault());
     }
 
-    public MaestroServoController(DriverBinding driver, Settings2 settings) {
+    public MaestroServoController(DriverBinding driver, Settings settings) {
         final Optional<Product> product = Product.fromId(driver.getVendorId(), driver.getProductId());
         if (!product.isPresent())
             throw new RuntimeException("Attempting to connect to unrecognised device");
@@ -77,7 +77,7 @@ public class MaestroServoController implements Closeable {
         return product;
     }
 
-    public Settings2 getSettings() {
+    public Settings getSettings() {
         return settings;
     }
 
@@ -109,7 +109,7 @@ public class MaestroServoController implements Closeable {
         conn.send(Request.SET_PARAMETER, value, index);
     }
 
-    public void updateSettings(Settings2 settings) {
+    public void updateSettings(Settings settings) {
         this.settings = settings;
 
         LOG.info("Applying settings: " + settings);
@@ -155,7 +155,10 @@ public class MaestroServoController implements Closeable {
         byte[] channelModeBytes = {0, 0, 0, 0, 0, 0};
 
         for (int port = 0; port < product.getPorts(); port++) {
-            final ChannelSettings2 channel = settings.getChannel(port);
+            final ChannelSettings channel = settings.getChannel(port);
+
+            if(channel.getChannelMode()== ChannelMode.OFF)
+                continue;
 
             if (product == Product.MICRO6) {
                 // Set the io/output masks
@@ -221,12 +224,12 @@ public class MaestroServoController implements Closeable {
     }
 
     public void resetTarget(int servo) {
-        final ChannelSettings2 channel = settings.getChannel(servo);
+        final ChannelSettings channel = settings.getChannel(servo);
         this.setTarget(servo, channel.getHome());
     }
 
     public void setTarget(int servo, int value) {
-        final ChannelSettings2 channel = settings.getChannel(servo);
+        final ChannelSettings channel = settings.getChannel(servo);
         if (value < channel.getMinimum())
             value = channel.getMinimum();
 

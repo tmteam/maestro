@@ -1,7 +1,9 @@
-package com.tmteam.jamaestro.settings;
+package Settings;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tmteam.jamaestro.settings.ChannelSettings;
+import com.tmteam.jamaestro.settings.Settings;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -12,10 +14,8 @@ import java.nio.file.Paths;
 
 public class Serializer {
 
-    public static Settings readSettings(String jsonPath) throws IOException {
-
+    public static BodyKinematicSettings readSettings(String jsonPath) throws IOException {
         String text;
-
         Path path = Paths.get(jsonPath);
         text = new String(Files.readAllBytes(path));
         return  deserializeSettings(text);
@@ -24,16 +24,10 @@ public class Serializer {
         String text = serialize(obj);
         Files.write(Paths.get(jsonPath), text.getBytes());
     }
-    public static Settings deserializeSettings(String json){
+    public static BodyKinematicSettings deserializeSettings(String json){
         Reader reader = new StringReader(json);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.fromJson(json, Settings.class);
-    }
-
-    public static ChannelSettings deserializeChannelSettings(String json){
-        Reader reader = new StringReader(json);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.fromJson(json, ChannelSettings.class);
+        return gson.fromJson(json, BodyKinematicSettings.class);
     }
 
     public static  String serialize(Object obj){

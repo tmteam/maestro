@@ -1,6 +1,7 @@
 package com.tmteam.jamaestro.api;
 
 public enum ChannelMode {
+    OFF(-1),
     SERVO(0),
     SERVO_MUTLIPLIED(1),
     OUTPUT(2),

@@ -1,0 +1,307 @@
+{
+  "maestro": {
+    "servosAvailable": 24,
+    "servoPeriod": 156,
+    "serialMode": "UART_DETECT_BAUD_RATE",
+    "baudRate": 9600,
+    "servoMultiplier": 1,
+    "miniMaestroServoPeriod": 80000,
+    "enableCrc": false,
+    "neverSuspend": false,
+    "deviceNumber": 12,
+    "miniSscOffset": 0,
+    "timeout": 0,
+    "scriptDone": true,
+    "enablePullups": false,
+    "channels": {
+      "0": {
+        "channelMode": "SERVO",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "FR-0"
+      },
+      "1": {
+        "channelMode": "SERVO",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "FR-1"
+      },
+      "2": {
+        "channelMode": "SERVO",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "FR-2"
+      },
+      "3": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "4": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "5": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "6": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "7": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "8": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "9": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "10": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      },
+      "11": {
+        "channelMode": "OFF",
+        "homeMode": "OFF",
+        "home": 6000,
+        "minimum": 3968,
+        "maximum": 8000,
+        "neutral": 6000,
+        "range": 1905,
+        "speed": 0,
+        "acceleration": 0,
+        "name": "unnamed"
+      }
+    }
+  },
+  "frontRightLeg": {
+    "legSettings": {
+      "name": "FR leg",
+      "top_0": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "FR-0 servo",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "middle_1": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "FR-1 servo",
+        "maxSpeed": 0.0,
+        "channel": 1
+      },
+      "bottom_2": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "FR-2 servo",
+        "maxSpeed": 0.0,
+        "channel": 2
+      },
+      "topToMiddleVerticalOffset": 0.0,
+      "topToMiddleLength": 0.0,
+      "middleLength": 0.0,
+      "bottomLength": 0.0
+    },
+    "frontAngle": 0.0,
+    "rightAngle": 0.0,
+    "topAngle": 0.0,
+    "rightOffsetX": 0.0,
+    "hordOffsetY": 0.0,
+    "topOffsetZ": 0.0
+  },
+  "backRightLeg": {
+    "legSettings": {
+      "name": "unnamedLeg",
+      "top_0": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "middle_1": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "bottom_2": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "topToMiddleVerticalOffset": 0.0,
+      "topToMiddleLength": 0.0,
+      "middleLength": 0.0,
+      "bottomLength": 0.0
+    },
+    "frontAngle": 0.0,
+    "rightAngle": 0.0,
+    "topAngle": 0.0,
+    "rightOffsetX": 0.0,
+    "hordOffsetY": 0.0,
+    "topOffsetZ": 0.0
+  },
+  "backLeftLeg": {
+    "legSettings": {
+      "name": "unnamedLeg",
+      "top_0": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "middle_1": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "bottom_2": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "topToMiddleVerticalOffset": 0.0,
+      "topToMiddleLength": 0.0,
+      "middleLength": 0.0,
+      "bottomLength": 0.0
+    },
+    "frontAngle": 0.0,
+    "rightAngle": 0.0,
+    "topAngle": 0.0,
+    "rightOffsetX": 0.0,
+    "hordOffsetY": 0.0,
+    "topOffsetZ": 0.0
+  },
+  "frontLeftLeg": {
+    "legSettings": {
+      "name": "unnamedLeg",
+      "top_0": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "middle_1": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "bottom_2": {
+        "maxValue": 180.0,
+        "minValue": 0.0,
+        "name": "unknownName",
+        "maxSpeed": 0.0,
+        "channel": 0
+      },
+      "topToMiddleVerticalOffset": 0.0,
+      "topToMiddleLength": 0.0,
+      "middleLength": 0.0,
+      "bottomLength": 0.0
+    },
+    "frontAngle": 0.0,
+    "rightAngle": 0.0,
+    "topAngle": 0.0,
+    "rightOffsetX": 0.0,
+    "hordOffsetY": 0.0,
+    "topOffsetZ": 0.0
+  }
+}

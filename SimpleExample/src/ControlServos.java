@@ -1,6 +1,5 @@
 import com.tmteam.jamaestro.binding.LibUsbDriverBinding;
 import com.tmteam.jamaestro.MaestroServoController;
-import com.tmteam.jamaestro.api.ChannelMode;
 import com.tmteam.jamaestro.api.Product;
 import com.tmteam.jamaestro.binding.DriverBinding;
 import com.tmteam.jamaestro.settings.*;
@@ -13,7 +12,7 @@ import java.io.IOException;
 public class ControlServos {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Settings2 settings = Serializer.readSettings("set.json");
+        Settings settings = Serializer.readSettings("set.json");
 
         Product mini24 = Product.MINI24;
 
