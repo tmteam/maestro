@@ -1,8 +1,8 @@
-package com.jamierf.maestro.settings;
+package com.tmteam.jamaestro.settings;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.jamierf.maestro.api.SerialMode;
+import com.tmteam.jamaestro.api.SerialMode;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.jamierf.maestro.binding;
+package com.tmteam.jamaestro.binding;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
-import com.jamierf.maestro.api.Product;
+import com.tmteam.jamaestro.api.Product;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

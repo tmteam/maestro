@@ -1,8 +1,8 @@
-package com.jamief.maestro.binding;
+package com.tmteam.jamaestro.binding;
 
-import com.jamierf.maestro.api.Product;
-import com.jamierf.maestro.binding.AsyncBindingListener;
-import com.jamierf.maestro.binding.DriverBinding;
+import com.tmteam.jamaestro.api.Product;
+import com.tmteam.jamaestro.binding.AsyncBindingListener;
+import com.tmteam.jamaestro.binding.DriverBinding;
 import org.usb4java.*;
 
 

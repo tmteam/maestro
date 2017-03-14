@@ -1,10 +1,10 @@
-import com.jamief.maestro.binding.LibUsbDriverBinding;
-import com.jamierf.maestro.MaestroServoController;
-import com.jamierf.maestro.api.ChannelMode;
-import com.jamierf.maestro.api.Product;
-import com.jamierf.maestro.binding.DriverBinding;
-import com.jamierf.maestro.settings.ChannelSettings;
-import com.jamierf.maestro.settings.Settings;
+import com.tmteam.jamaestro.binding.LibUsbDriverBinding;
+import com.tmteam.jamaestro.MaestroServoController;
+import com.tmteam.jamaestro.api.ChannelMode;
+import com.tmteam.jamaestro.api.Product;
+import com.tmteam.jamaestro.binding.DriverBinding;
+import com.tmteam.jamaestro.settings.ChannelSettings;
+import com.tmteam.jamaestro.settings.Settings;
 
 /**
  * Created by Su on 11/03/17.

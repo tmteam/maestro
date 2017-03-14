@@ -1,4 +1,4 @@
-package com.jamierf.maestro.binding;
+package com.tmteam.jamaestro.binding;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

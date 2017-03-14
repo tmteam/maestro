@@ -1,8 +1,8 @@
-package com.jamierf.maestro;
+package com.tmteam.jamaestro;
 
-import com.jamierf.maestro.api.Request;
-import com.jamierf.maestro.api.RequestType;
-import com.jamierf.maestro.binding.DriverBinding;
+import com.tmteam.jamaestro.api.Request;
+import com.tmteam.jamaestro.api.RequestType;
+import com.tmteam.jamaestro.binding.DriverBinding;
 
 import java.io.Closeable;
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package com.jamierf.maestro.settings;
+package com.tmteam.jamaestro.settings;
 
-import com.jamierf.maestro.api.ChannelMode;
-import com.jamierf.maestro.api.HomeMode;
+import com.tmteam.jamaestro.api.ChannelMode;
+import com.tmteam.jamaestro.api.HomeMode;
 
 public class ChannelSettings {
 

@@ -1,4 +1,4 @@
-package com.jamierf.maestro.api;
+package com.tmteam.jamaestro.api;
 
 import com.google.common.base.Optional;
 

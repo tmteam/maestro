@@ -1,4 +1,4 @@
-package com.jamierf.maestro.binding;
+package com.tmteam.jamaestro.binding;
 
 public interface AsyncBindingListener<T extends DriverBinding> {
 

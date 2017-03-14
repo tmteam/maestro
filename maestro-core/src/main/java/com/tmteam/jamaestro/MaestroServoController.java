@@ -1,11 +1,11 @@
-package com.jamierf.maestro;
+package com.tmteam.jamaestro;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.jamierf.maestro.api.*;
-import com.jamierf.maestro.binding.DriverBinding;
-import com.jamierf.maestro.settings.ChannelSettings;
-import com.jamierf.maestro.settings.Settings;
+import com.tmteam.jamaestro.api.*;
+import com.tmteam.jamaestro.binding.DriverBinding;
+import com.tmteam.jamaestro.settings.ChannelSettings;
+import com.tmteam.jamaestro.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

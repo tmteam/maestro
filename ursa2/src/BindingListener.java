@@ -1,5 +1,5 @@
-import com.jamierf.maestro.binding.AsyncBindingListener;
-import com.jamierf.maestro.binding.DriverBinding;
+import com.tmteam.jamaestro.binding.AsyncBindingListener;
+import com.tmteam.jamaestro.binding.DriverBinding;
 
 /**
  * Created by Su on 11/03/17.

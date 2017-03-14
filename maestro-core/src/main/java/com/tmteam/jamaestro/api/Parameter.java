@@ -1,4 +1,4 @@
-package com.jamierf.maestro.api;
+package com.tmteam.jamaestro.api;
 
 public enum Parameter {
     INITIALIZED(0, Range.u8),                               // 1 byte - 0 or 0xFF

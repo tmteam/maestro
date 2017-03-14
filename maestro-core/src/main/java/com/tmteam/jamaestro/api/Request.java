@@ -1,4 +1,4 @@
-package com.jamierf.maestro.api;
+package com.tmteam.jamaestro.api;
 
 public enum Request {
     GET_FIRMWARE_VERSION(0x06, RequestType.GET), // 6
