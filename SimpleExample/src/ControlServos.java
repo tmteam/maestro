@@ -10,12 +10,10 @@ import java.io.IOException;
 /**
  * Created by Su on 11/03/17.
  */
-public class HelloWorld {
+public class ControlServos {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-
         Settings2 settings = Serializer.readSettings("set.json");
-
 
         Product mini24 = Product.MINI24;
 

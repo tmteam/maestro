@@ -246,6 +246,10 @@ public class MaestroServoController implements Closeable {
         conn.send(Request.SET_VARIABLE, value, (servo | 0x80));
     }
 
+    public void  setMultipleTargets(){
+
+    }
+
     public void clearErrors() {
         conn.send(Request.CLEAR_ERRORS);
     }

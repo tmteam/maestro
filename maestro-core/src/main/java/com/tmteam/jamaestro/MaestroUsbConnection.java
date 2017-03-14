@@ -35,6 +35,8 @@ public class MaestroUsbConnection implements Closeable {
         return this.request(request, 0x0000, 0x0000, length);
     }
 
+
+
     public ByteBuffer request(Request request, int value, int index, int length) {
         final ByteBuffer buffer = driver.allocateBuffer(length);
 
