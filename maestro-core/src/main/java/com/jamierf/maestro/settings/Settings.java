@@ -18,11 +18,17 @@ public class Settings {
         return (256D / 12D) * period * servos;
     }
 
+    public byte getServoMultiplier() {
+        return servoMultiplier;
+    }
+
     public static class Builder {
+        private byte servoMultiplier = 1;
+        private int miniMaestroServoPeriod = 80000;
 
         private int servosAvailable = 6;
         private int servoPeriod = 156;
-        private SerialMode serialMode = SerialMode.USB_DUAL_PORT;
+        private SerialMode serialMode = SerialMode.UART_DETECT_BAUD_RATE;
         private int baudRate = 9600;
         private boolean enableCrc = false;
         private boolean neverSuspend = false;
@@ -32,6 +38,16 @@ public class Settings {
         private boolean scriptDone = true;
         private boolean enablePullups = false;
         private final Map<Integer, ChannelSettings> channels = Maps.newTreeMap();
+
+        public Builder setServoMultiplier(byte servoMultiplier){
+            this.servoMultiplier = servoMultiplier;
+            return  this;
+        }
+
+        public Builder setMiniMaestroServoPeriod(byte miniMaestroServoPeriod){
+            this.miniMaestroServoPeriod = miniMaestroServoPeriod;
+            return  this;
+        }
 
         public Builder setServosAvailable(int servosAvailable) {
             this.servosAvailable = servosAvailable;
@@ -94,7 +110,21 @@ public class Settings {
         }
 
         public Settings build() {
-            return new Settings(servosAvailable, servoPeriod, serialMode, baudRate, enableCrc, neverSuspend, deviceNumber, miniSccOffset, timeout, scriptDone, enablePullups, ImmutableMap.copyOf(channels));
+            return new Settings(
+                    servosAvailable,
+                    servoPeriod,
+                    serialMode,
+                    baudRate,
+                    servoMultiplier,
+                    miniMaestroServoPeriod,
+                    enableCrc,
+                    neverSuspend,
+                    deviceNumber,
+                    miniSccOffset,
+                    timeout,
+                    scriptDone,
+                    enablePullups,
+                    ImmutableMap.copyOf(channels));
         }
     }
 
@@ -103,14 +133,14 @@ public class Settings {
     }
 
     // The number of servo ports available. This, along with the servoPeriod, determine the "maximum pulse width".
-    public final int servosAvailable;
+    private final int servosAvailable;
 
     // The total time allotted to each servo channel, in units of 256/12 = 21.33333 us. The unit for
     // this one are unusual, because that is the way it is stored on the device and its unit is not a
     // multiple of 4, so we would have inevitable rounding errors if we tried to represent it in
     // quarter-microseconds. Default is 156, so with 6 servos available you get ~20ms between pulses
     // on a given channel (50Hz).
-    public final int servoPeriod;
+    private final int servoPeriod;
 
     // Determines how serial bytes flow between the two USB COM ports, the TTL port, and the Maestro's
     // serial command processor.
@@ -119,6 +149,26 @@ public class Settings {
     // The fixed baud rate, in units of bits per second. This parameter only applies if serial mode is
     // USB UART Fixed Baud.
     private final int baudRate;
+
+
+    // This setting only applied to the Mini Maestro.
+    // The non-multiplied servos have a period specified by miniMaestroServoPeriod.
+    // The multiplied servos have a period specified by miniMaestroServoPeriod*servoMultiplier.
+    //
+    // Valid values for this parameter are 1 to 256.
+    // </summary>
+    private final byte servoMultiplier;
+
+    // This setting only applies to the Mini Maestro.
+    // For the Micro Maestro, see microMaestroServoPeriod.
+    //
+    // The length of the time period in which the Mini Maestro sends pulses
+    // to all the enabled servos, in units of quarter microseconds.
+    //
+    // Valid values for this parameter are 0 to 16,777,215.  But
+    //
+    // Default is 80000, so each servo receives a pulse every 20 ms (50 Hz).
+    private final int miniMaestroServoPeriod;
 
     // If true, then you must send a 7-bit CRC byte at the end of every serial command (except the Mini
     // SSC II command).
@@ -153,11 +203,27 @@ public class Settings {
     // range, neutral, min, max.
     private final Map<Integer, ChannelSettings> channels;
 
-    public Settings(int servosAvailable, int servoPeriod, SerialMode serialMode, int baudRate, boolean enableCrc, boolean neverSuspend, int deviceNumber, int miniSscOffset, int timeout, boolean scriptDone, boolean enablePullups, Map<Integer, ChannelSettings> channels) {
+    public Settings(int servosAvailable,
+                    int servoPeriod,
+                    SerialMode serialMode,
+                    int baudRate,
+                    byte servoMultiplier,
+                    int miniMaestroServoPeriod,
+                    boolean enableCrc,
+                    boolean neverSuspend,
+                    int deviceNumber,
+                    int miniSscOffset,
+                    int timeout,
+                    boolean scriptDone,
+                    boolean enablePullups,
+                    Map<Integer, ChannelSettings> channels)
+    {
         this.servosAvailable = servosAvailable;
         this.servoPeriod = servoPeriod;
         this.serialMode = serialMode;
         this.baudRate = baudRate;
+        this.servoMultiplier = servoMultiplier;
+        this.miniMaestroServoPeriod = miniMaestroServoPeriod;
         this.enableCrc = enableCrc;
         this.neverSuspend = neverSuspend;
         this.deviceNumber = deviceNumber;
@@ -179,6 +245,8 @@ public class Settings {
     public SerialMode getSerialMode() {
         return serialMode;
     }
+
+    public  int getMiniMaestroServoPeriod(){return  miniMaestroServoPeriod;}
 
     public int getBaudRate() {
         return baudRate;

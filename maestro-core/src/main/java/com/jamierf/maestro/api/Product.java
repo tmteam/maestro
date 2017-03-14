@@ -5,10 +5,10 @@ import com.google.common.base.Optional;
 // TODO: Device product IDs
 public enum Product {
     MICRO6(8187, 137, 6, 1024),
-    MINI12(8187, 0, 12, 8192),
+    MINI12(8187, 138, 12, 8192),
 
-    MINI18(8187, 0, 18, 8192),
-    MINI24(8187, 0, 24, 8192);
+    MINI18(8187, 139, 18, 8192),
+    MINI24(8187, 140, 24, 8192);
 
     public static Optional<Product> fromId(int vendorId, int productId) {
         for (Product product : Product.values()) {

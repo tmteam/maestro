@@ -58,6 +58,7 @@ public class MaestroUsbConnection implements Closeable {
         try {
             final RequestType type = request.getType();
             final int read = driver.controlTransfer(type.getCode(), request.getCode(), value, index, null, timeout);
+            System.out.println("send: "+ request.getCode()+" val: "+ value+" index: "+ index);
             if (read != 0)
                 throw new IOException(String.format("Read incorrect length (expected: 0, actual: %d) from controller", read));
         } catch (IOException e) {

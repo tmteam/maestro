@@ -2,10 +2,7 @@ package com.jamierf.maestro;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.jamierf.maestro.api.Parameter;
-import com.jamierf.maestro.api.Product;
-import com.jamierf.maestro.api.Request;
-import com.jamierf.maestro.api.Status;
+import com.jamierf.maestro.api.*;
 import com.jamierf.maestro.binding.DriverBinding;
 import com.jamierf.maestro.settings.ChannelSettings;
 import com.jamierf.maestro.settings.Settings;
@@ -15,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.io.Closeable;
 import java.nio.ByteBuffer;
 import java.util.List;
+
+// Clear copy of origin C# driver: https://github.com/pololu/pololu-usb-sdk/blob/master/Maestro/Usc/Usc.cs
 
 public class MaestroServoController implements Closeable {
 
@@ -115,29 +114,36 @@ public class MaestroServoController implements Closeable {
 
         LOG.info("Applying settings: " + settings);
 
-        this.setParameter(Parameter.SERIAL_MODE, settings.getSerialMode().getCode());
-        this.setParameter(Parameter.SERIAL_FIXED_BAUD_RATE, MaestroServoController.convertBpsToSpbrg(settings.getBaudRate()));
-        this.setParameter(Parameter.SERIAL_ENABLE_CRC, settings.isEnableCrc() ? 1 : 0);
-        this.setParameter(Parameter.SERIAL_NEVER_SUSPEND, settings.isNeverSuspend() ? 1 : 0);
-        this.setParameter(Parameter.SERIAL_DEVICE_NUMBER, settings.getDeviceNumber());
+        setParameter(Parameter.SERIAL_MODE, settings.getSerialMode().getCode());
+        setParameter(Parameter.SERIAL_FIXED_BAUD_RATE, MaestroServoController.convertBpsToSpbrg(settings.getBaudRate()));
+        setParameter(Parameter.SERIAL_ENABLE_CRC, settings.isEnableCrc() ? 1 : 0);
+        setParameter(Parameter.SERIAL_NEVER_SUSPEND, settings.isNeverSuspend() ? 1 : 0);
+        setParameter(Parameter.SERIAL_DEVICE_NUMBER, settings.getDeviceNumber());
 
-        this.setParameter(Parameter.SERIAL_MINI_SSC_OFFSET, settings.getMiniSscOffset());
-        this.setParameter(Parameter.SERIAL_TIMEOUT, settings.getTimeout());
-        this.setParameter(Parameter.SCRIPT_DONE, settings.isScriptDone() ? 1 : 0);
+        setParameter(Parameter.SERIAL_MINI_SSC_OFFSET, settings.getMiniSscOffset());
+        setParameter(Parameter.SERIAL_TIMEOUT, settings.getTimeout());
+        setParameter(Parameter.SCRIPT_DONE, settings.isScriptDone() ? 1 : 0);
 
         // Maestro Micro 6
         if (product == Product.MICRO6) {
-            this.setParameter(Parameter.SERVOS_AVAILABLE, settings.getServosAvailable());
-            this.setParameter(Parameter.SERVO_PERIOD, settings.getServoPeriod());
+            setParameter(Parameter.SERVOS_AVAILABLE, settings.getServosAvailable());
+            setParameter(Parameter.SERVO_PERIOD, settings.getServoPeriod());
         }
         // Maestro Mini 12, 18, 24
         else {
-            // TODO
-//            this.setParameter(Settings.Parameter.MINI_MAESTRO_SERVO_PERIOD_L, settings.getMiniMaestroServoPeriod() & 0xFF);
-//            this.setParameter(Settings.Parameter.MINI_MAESTRO_SERVO_PERIOD_HU, settings.getMiniMaestroServoPeriod() >> 8);
+            this.setParameter(Parameter.MINI_MAESTRO_SERVO_PERIOD_L, settings.getMiniMaestroServoPeriod() & 0xFF);
+            this.setParameter(Parameter.MINI_MAESTRO_SERVO_PERIOD_HU, settings.getServoPeriod() >> 8);
 
-            // TODO: Multiplier
-//            this.setParameter(Settings.Parameter.PARAMETER_SERVO_MULTIPLIER, multiplier); // TODO
+
+                byte multiplier;
+                if (settings.getServoMultiplier()  <  1)
+                    multiplier = 0;
+                else if (settings.getServoMultiplier() > 256)
+                    multiplier = (byte)(255);
+                else
+                    multiplier = (byte)(settings.getServoMultiplier() - 1);
+
+                setParameter(Parameter.SERVO_MULTIPLIER, multiplier);
         }
 
         // Maestro Mini 18, 24
@@ -160,27 +166,37 @@ public class MaestroServoController implements Closeable {
                         ioMask |= (byte)(1 << MaestroServoController.channelToPort(port));
                 }
             }
-            else {
-//                channelModeBytes[port >> 2] |= (byte)((byte) channel.mode << ((port & 3) << 1)); // TODO
-            }
+            else
+                channelModeBytes[port >> 2] |= (byte)((byte) channel.getChannelMode().getCode() << ((port & 3) << 1));
 
-            this.setParameter(Parameter.SERVO_HOME, port, channel.getHome());
-            this.setParameter(Parameter.SERVO_MIN, port, channel.getMinimum() / 64);
-            this.setParameter(Parameter.SERVO_MAX, port, channel.getMaximum() / 64);
-            this.setParameter(Parameter.SERVO_NEUTRAL, port, channel.getNeutral());
-            this.setParameter(Parameter.SERVO_RANGE, port, channel.getRange() / 127);
-            this.setParameter(Parameter.SERVO_SPEED, port, channel.getExponentialSpeed());
-            this.setParameter(Parameter.SERVO_ACCELERATION, port, channel.getAcceleration());
+            // Make sure that HomeMode is "Ignore" for inputs.  This is also done in
+            // fixUscSettings.
+            HomeMode correctedHomeMode = channel.getHomeMode();
+            if (channel.getChannelMode() == ChannelMode.INPUT)
+                correctedHomeMode = HomeMode.IGNORE;
+
+            // Compute the raw value of the "home" parameter.
+            int home;
+            if (correctedHomeMode == HomeMode.OFF) home = 0;
+            else if (correctedHomeMode == HomeMode.IGNORE) home = 1;
+            else home = channel.getHome();
+
+            setParameter(Parameter.SERVO_HOME, port, home);
+            setParameter(Parameter.SERVO_MIN, port, channel.getMinimum() / 64);
+            setParameter(Parameter.SERVO_MAX, port, channel.getMaximum() / 64);
+            setParameter(Parameter.SERVO_NEUTRAL, port, channel.getNeutral());
+            setParameter(Parameter.SERVO_RANGE, port, channel.getRange() / 127);
+            setParameter(Parameter.SERVO_SPEED, port, channel.getExponentialSpeed());
+            setParameter(Parameter.SERVO_ACCELERATION, port, channel.getAcceleration());
         }
 
         if (product == Product.MICRO6) {
-            this.setParameter(Parameter.IO_MASK_C, ioMask);
-            this.setParameter(Parameter.OUTPUT_MASK_C, outputMask);
+            setParameter(Parameter.IO_MASK_C, ioMask);
+            setParameter(Parameter.OUTPUT_MASK_C, outputMask);
         }
         else {
-            for (int port = 0; port < channelModeBytes.length; port++) {
-//                this.setParameter(Settings.Parameter.CHANNEL_MODES_0_3 + port, channelModeBytes[port]); // TODO
-            }
+            for (byte port = 0; port < channelModeBytes.length; port++)
+                setParameter((byte)(Parameter.CHANNEL_MODES_0_3.getCode() + port), Parameter.CHANNEL_MODES_0_3.getRange(), channelModeBytes[port]);
         }
     }
 
