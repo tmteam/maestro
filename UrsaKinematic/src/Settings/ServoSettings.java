@@ -10,6 +10,15 @@ public class ServoSettings {
     private double maxSpeed  = 0;
     private int channel;
 
+    public  ServoSettings(int channel, double min, double max){
+        this.channel = channel;
+        this.minValue = min;
+        this.maxValue = max;
+    }
+    public  ServoSettings(){
+
+    }
+
     public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
     }

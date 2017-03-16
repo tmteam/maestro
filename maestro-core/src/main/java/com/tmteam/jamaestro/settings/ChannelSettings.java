@@ -9,6 +9,11 @@ import com.tmteam.jamaestro.api.HomeMode;
 public class ChannelSettings {
 
     public static ChannelSettings CreateDefault(){return  new ChannelSettings();}
+    public static ChannelSettings CreateForTest(int min, int max){
+        return new ChannelSettings(min, max);
+    }
+
+
     private static byte normalSpeedToExponentialSpeed(int mantissa) {
         byte exponent = 0;
 
@@ -39,6 +44,11 @@ public class ChannelSettings {
     private int acceleration = 0;   // unlimited
     private String name = "unnamed";
 
+    public ChannelSettings(){}
+    private ChannelSettings(int min, int max){
+        minimum = min;
+        maximum = max;
+    }
     public void setName(String name) {
         this.name = name;
     }

@@ -5,12 +5,31 @@ package Settings;
  */
 public class LegSettings {
 
+    public LegSettings(ServoSettings top_0,
+                       ServoSettings middle_1,
+                       ServoSettings bottom_2,
+                       double topToMiddleVerticalOffset,
+                       double topToMiddleLength,
+                       double middleLength,
+                       double bottomLength
+    ){
+     this.top_0 = top_0;
+     this.middle_1 = middle_1;
+     this.bottom_2 = bottom_2;
+     this.topToMiddleVerticalOffset = topToMiddleVerticalOffset;
+     this.topToMiddleLength = topToMiddleLength;
+     this.middleLength = middleLength;
+     this.bottomLength = bottomLength;
+     name="unnamedLeg";
+    }
+
     public LegSettings(){
         top_0 = new ServoSettings();
         middle_1 = new ServoSettings();
         bottom_2 = new ServoSettings();
         name="unnamedLeg";
     }
+
     private String name;
 
     private ServoSettings top_0;
