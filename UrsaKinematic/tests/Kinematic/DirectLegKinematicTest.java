@@ -1,0 +1,91 @@
+package Kinematic;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Created by Su on 16/03/17.
+ */
+public class DirectLegKinematicTest extends LegTestBase {
+
+    @Test
+    void m1Andb1Equal180_pointYEquals0(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                35, 180, 180));
+        Assertions.assertEquals(0,point.y,0.01);
+    }
+
+    @Test
+    void legInVerticalUpPosition_pointZEqualsVerticalLegLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(90, 0,180));
+
+        double legHeight =
+                - leg.getSettings().getTopToMiddleVerticalOffset()
+                        + leg.getSettings().getMiddleLength()
+                        + leg.getSettings().getBottomLength();
+
+        Assertions.assertEquals(legHeight, point.z,0.01);
+    }
+
+    @Test
+    void legOnElbowsVertivalPosition_pointZEqualsSumm(){
+        Leg leg = CreateLeg();
+        //Ставим ногу вертикально "на локоть", поднимая нижнюю часть вертикально вверх
+        DimensionPoint point = leg.toPoint(new LegAngles(90,180,0));
+
+        double legHeight = leg.getSettings().getTopToMiddleVerticalOffset()
+                + leg.getSettings().getMiddleLength()
+                - leg.getSettings().getBottomLength();
+
+        Assertions.assertEquals(-legHeight, point.z,0.01);
+    }
+
+    @Test
+    void legInVerticalPosition_pointZEqualsNegativeVerticalLegLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(leg.getVerticalPositionAngels());
+
+        double legHeight = leg.getSettings().getTopToMiddleVerticalOffset()
+                + leg.getSettings().getMiddleLength()
+                + leg.getSettings().getBottomLength();
+
+        Assertions.assertEquals(-legHeight, point.z);
+    }
+    @Test
+    void t0Equal90_pointXEqualsTopLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(90, 12, 24));
+        Assertions.assertEquals(leg.getSettings().getTopToMiddleLength(), point.x,0.01);
+    }
+
+    @Test
+    void t090_m90_b90_pointZEqualsBottomLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(90, 90, 90));
+
+        Assertions.assertEquals(
+                -leg.getSettings().getBottomLength() - leg.getSettings().getTopToMiddleVerticalOffset(),
+                point.z,
+                0.01);
+    }
+    @Test
+    void legIsHorisontal_pointYEqualsLegLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(90, 90, 180));
+
+        double legLenght =
+                + leg.getSettings().getMiddleLength()
+                        + leg.getSettings().getBottomLength();
+
+        Assertions.assertEquals(legLenght, point.y,0.01);
+    }
+
+    @Test
+    void t0Equal0_pointZEqualsTopLength(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(0, 12, 24));
+        Assertions.assertEquals(leg.getSettings().getTopToMiddleLength(), point.z,0.01);
+    }
+}

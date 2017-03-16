@@ -2,7 +2,6 @@ package Kinematic;
 
 import Settings.LegSettings;
 import com.tmteam.jamaestro.settings.ChannelSettings;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by Su on 14/03/17.
@@ -41,8 +40,13 @@ public class Leg {
         return settings;
     }
 
-    public LegServoPositions toPositions(DimentionPoint point){
-        return toPositions(toAngels(point));
+    public LegAngles getVerticalPositionAngels(){
+       return new LegAngles(90,
+                180, 180);
+    }
+
+    public LegServoPositions toPositions(DimensionPoint point){
+        return toPositions(toAngles(point));
     }
 
     public LegServoPositions toPositions(LegAngles angles){
@@ -61,38 +65,41 @@ public class Leg {
         );
     }
 
-    public DimentionPoint toPoint(LegServoPositions positions){
+    public DimensionPoint toPoint(LegServoPositions positions){
         return toPoint(toAngles(positions));
     }
 
-    public DimentionPoint toPoint(LegAngles angles){
+    public DimensionPoint toPoint(LegAngles angles){
         //Зафиксируем ногу вертикально и посмотрим с боку:
         //угол 0: это вертикально стоящая нога вверх
         //Расстояние по глобальному Y:
         double legFinalY =
-                +settings.getMiddleLength()*Math.sin(Math.toRadians(angles.m1))
-                +settings.getBottomLength()*Math.sin(Math.toRadians(angles.b2-angles.m1));
+                +settings.getMiddleLength()*K.sin(angles.m1)
+                +settings.getBottomLength()*K.sin(angles.b2-angles.m1);
         //Расстояние по глобальному Z:
         double heightOffset =
-                +settings.getMiddleLength()*Math.cos(Math.toRadians(angles.m1))
-                +settings.getBottomLength()*Math.cos(Math.toRadians(angles.b2-angles.m1))
+                -settings.getMiddleLength()*K.cos(angles.m1)
+                +settings.getBottomLength()*K.cos(angles.b2-angles.m1)
                 +settings.getTopToMiddleVerticalOffset();
 
         //Посмотрим на эту ногу спереди
         //длинна отрезка от крепления ноги до её пятки:
-        double frontLength = Math.sqrt(heightOffset*heightOffset + Math.pow(settings.getTopToMiddleLength(),2));
+        double frontLength = K.getLength(heightOffset,settings.getTopToMiddleLength());
 
         //Угол от крепления ноги до её пятки (относительно глобальной вертикали
-        double frontAngle = Math.asin(settings.getTopToMiddleLength()/frontLength)+ angles.t0;
+        double frontAngle = K.acos(settings.getTopToMiddleLength()/frontLength)+ angles.t0;
 
-        return new DimentionPoint(
-                Math.sin(Math.toRadians(frontAngle))* frontLength,
+        if(heightOffset<0)
+            frontAngle -=180;
+
+        return new DimensionPoint(
+                K.sin(frontAngle)* frontLength,
                 legFinalY,//в не зависимости от поворота t0, данное расстояние сохранится. Но в системе координат ноги оно будет Y
-                Math.cos(Math.toRadians(frontAngle))* frontLength
+                K.cos(frontAngle)* frontLength
         );
     }
 
-    public LegAngles toAngels(DimentionPoint point){
+    public LegAngles toAngles(DimensionPoint point){
         //w*w + y*y = r*r
         //y = sqrt(rr-ww)
         //y = o + tar
@@ -100,7 +107,10 @@ public class Leg {
 
         double r = K.getLength(point.x  , point.z);
         double w = settings.getTopToMiddleLength();
-        double leg12Y = Math.sqrt(r*r - w*w)-settings.getTopToMiddleVerticalOffset();
+        //итоговая длинна плеча
+        double topToMiddleConverted = K.getLength(w, settings.getTopToMiddleVerticalOffset());
+
+        double leg12Y = (r>topToMiddleConverted?1:-1)* Math.sqrt(r*r - w*w)-settings.getTopToMiddleVerticalOffset();
         double leg12X = point.y;
 
         //расстояние от верхней точки до пятки, по пифагору:
@@ -108,16 +118,17 @@ public class Leg {
 
 
         //Угол, образуемый фронтальным радус вектором
-        double totalAngle = 180 - Math.toDegrees(Math.acos(point.z/r));
+        double totalAngle = K.acos(point.z/r);
 
-        //итоговая длинна плеча
-        double topToMiddleConverted = K.getLength(w, settings.getTopToMiddleVerticalOffset());
         // фронтальный угол радус вектором и нижней leg12
-        double topToMiddleConvertedAngle = K.getAngle(topToMiddleConverted,
+        double topToMiddleConvertedAngle = K.getAngle(
+                topToMiddleConverted,
                 r,
-                leg12Y);
+                Math.abs(leg12Y));
 
-        double t0Angle = totalAngle+ topToMiddleConvertedAngle - 90;
+        double t0Angle = totalAngle+ (leg12Y>0
+                ? (topToMiddleConvertedAngle-90)
+                : (90-topToMiddleConvertedAngle));
 
         return new LegAngles(t0Angle, leg12Angles.m1, leg12Angles.b2);
     }
@@ -129,7 +140,6 @@ public class Leg {
      */
     private LegAngles getLeg12Angles(double leg12X, double leg12Y) {
         //http://roboty6.narod.ru/inverseKinematics.htm
-
         //возьмём ногу без топ сервы (leg12) и посмотрим на неё с боку
 
         double leg12Length = K.getLength(leg12X, leg12Y);
@@ -144,7 +154,9 @@ public class Leg {
                 settings.getBottomLength(),
                 leg12Length);
 
-        double q1 = Math.toDegrees(Math.atan(leg12Y/leg12X));
+        double q1 = leg12X==0
+                ?(leg12Y<0?180:0)
+                :K.atan(leg12Y/leg12X);
 
         return new LegAngles(0, q1+q2, b2angle);
     }

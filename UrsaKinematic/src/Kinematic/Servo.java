@@ -12,17 +12,34 @@ public class Servo {
     private ServoSettings servoSettings;
     private ChannelSettings channelSettings;
 
+    private LinearKoeffs angle2Pos;
+    private LinearKoeffs pos2Angle;
+
     public Servo(ServoSettings servoSettings, ChannelSettings channelSettings){
         this.servoSettings = servoSettings;
         this.channelSettings = channelSettings;
+
+        angle2Pos = K.createKoeffs(
+                servoSettings.getMinValue(),
+                servoSettings.getMaxValue(),
+                channelSettings.getMinimum(),
+                channelSettings.getMaximum()
+        );
+
+        pos2Angle = K.createKoeffs(
+                channelSettings.getMinimum(),
+                channelSettings.getMaximum(),
+                servoSettings.getMinValue(),
+                servoSettings.getMaxValue()
+        );
     }
 
     public int toPosition(double angle){
-        throw new NotImplementedException();
+        return (int)Math.round(angle2Pos.calcFor(angle));
     }
 
     public  double toAngle(double servoPosition){
-        throw  new NotImplementedException();
+        return pos2Angle.calcFor(servoPosition);
     }
 
     public ServoSettings getServoSettings() {

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Created by Su on 16/03/17.
  */
-class LegTest {
+class LegTest extends  LegTestBase {
     @Test
     void toAngles_MinPositions_convertsToMinAngels() {
         Leg leg = CreateLeg();
@@ -68,63 +68,16 @@ class LegTest {
         Assertions.assertEquals(leg.getServoB2().getChannelSettings().getMaximum(),positions.b2);
     }
     @Test
-    void AverageAngles_convertstoPositionsAndBack() {
+    void AverageAngles_convertToPositionsAndBack() {
         Leg leg = CreateLeg();
         final int averagePosition = 4000;
 
-        LegAngles someAngle =  new LegAngles(averagePosition,averagePosition,averagePosition);
-        LegServoPositions positions = leg.toPositions(someAngle);
+        LegServoPositions origin = new LegServoPositions(averagePosition, averagePosition, averagePosition);
+        LegAngles someAngle =   leg.toAngles(origin);
+        LegServoPositions calculated = leg.toPositions(someAngle);
 
-        Assertions.assertEquals(averagePosition, positions.t0);
-        Assertions.assertEquals(averagePosition, positions.m1);
-        Assertions.assertEquals(averagePosition, positions.b2);
+        Assertions.assertEquals(origin.t0, calculated.t0);
+        Assertions.assertEquals(origin.m1, calculated.m1);
+        Assertions.assertEquals(origin.b2, calculated.b2);
     }
-    @Test
-    void Kinematik_toPointAndBack_t0IsCorrect() {
-        final int averagePosition = 4000;
-        LegAngles angles = toKinematikPointAndBack(averagePosition);
-        Assertions.assertEquals(averagePosition,angles.t0);
-    }
-    @Test
-    void Kinematik_toPointAndBack_m1IsCorrect() {
-        final int averagePosition = 4000;
-        LegAngles angles = toKinematikPointAndBack(averagePosition);
-        Assertions.assertEquals(averagePosition,angles.m1);
-    }
-    @Test
-    void Kinematik_toPointAndBack_b2IsCorrect() {
-        final int averagePosition = 4000;
-        LegAngles angles = toKinematikPointAndBack(averagePosition);
-        Assertions.assertEquals(averagePosition,angles.b2);
-    }
-
-    @Test
-    void toAngels() {
-
-    }
-    private Leg CreateLeg(){
-
-        LegSettings legSettings = new LegSettings(
-                new ServoSettings(0, 10,100),
-                new ServoSettings(1, -5,170),
-                new ServoSettings(2, 30,70),
-                10,
-                25,
-                50,
-                70
-        );
-        return new Leg(legSettings,
-                ChannelSettings.CreateForTest(2000,8000),
-                ChannelSettings.CreateForTest(2500,7000),
-                ChannelSettings.CreateForTest(3300,9000));
-
-    }
-
-    private LegAngles toKinematikPointAndBack(int averagePosition) {
-        LegServoPositions somePosition =  new LegServoPositions(averagePosition,averagePosition,averagePosition);
-        Leg leg = CreateLeg();
-        DimentionPoint point = leg.toPoint(somePosition);
-        return leg.toAngels(point);
-    }
-
 }
