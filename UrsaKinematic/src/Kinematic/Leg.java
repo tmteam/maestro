@@ -74,8 +74,8 @@ public class Leg {
         //угол 0: это вертикально стоящая нога вверх
         //Расстояние по глобальному Y:
         double legFinalY =
-                +settings.getMiddleLength()*K.sin(angles.m1)
-                +settings.getBottomLength()*K.sin(angles.b2-angles.m1);
+                -settings.getMiddleLength()*K.sin(angles.m1)
+                -settings.getBottomLength()*K.sin(angles.b2-angles.m1);
         //Расстояние по глобальному Z:
         double heightOffset =
                 -settings.getMiddleLength()*K.cos(angles.m1)
@@ -114,7 +114,7 @@ public class Leg {
         double leg12X = point.y;
 
         //расстояние от верхней точки до пятки, по пифагору:
-        LegAngles leg12Angles = getLeg12Angles(leg12X, leg12Y);
+        InverseKinematicResult leg12Angles = getLeg12Angles(leg12X, leg12Y);
 
 
         //Угол, образуемый фронтальным радус вектором
@@ -130,34 +130,18 @@ public class Leg {
                 ? (topToMiddleConvertedAngle-90)
                 : (90-topToMiddleConvertedAngle));
 
-        return new LegAngles(t0Angle, leg12Angles.m1, leg12Angles.b2);
+        return new LegAngles(t0Angle, leg12Angles.baseAngle, leg12Angles.bendAngle);
     }
 
     /**
      * Считает углы m1 и b2 для известных X и Y
      * в координатах ноги без плеча
      *
+     * XY: если смотреть на вертикально (t0 = 90) поставленную ногу.
+     * Y>0 нога сверху
+     * X>0 нога спереди (в сторону головы)
      */
-    private LegAngles getLeg12Angles(double leg12X, double leg12Y) {
-        //http://roboty6.narod.ru/inverseKinematics.htm
-        //возьмём ногу без топ сервы (leg12) и посмотрим на неё с боку
-
-        double leg12Length = K.getLength(leg12X, leg12Y);
-        //теперь, имея все три стороны - считаем углы:
-        double b2angle =  K.getAngle(
-                leg12Length,
-                settings.getBottomLength(),
-                settings.getMiddleLength());
-
-        double q2 = K.getAngle(
-                settings.getMiddleLength(),
-                settings.getBottomLength(),
-                leg12Length);
-
-        double q1 = leg12X==0
-                ?(leg12Y<0?180:0)
-                :K.atan(leg12Y/leg12X);
-
-        return new LegAngles(0, q1+q2, b2angle);
+    private InverseKinematicResult getLeg12Angles(double leg12X, double leg12Y) {
+       return   K.getAnglesFor(leg12X, leg12Y, settings.getMiddleLength(), settings.getBottomLength());
     }
 }

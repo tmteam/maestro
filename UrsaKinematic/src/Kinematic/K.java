@@ -1,7 +1,5 @@
 package Kinematic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * Created by Su on 16/03/17.
  */
@@ -14,6 +12,7 @@ public class K {
     public static double acos(double relation){
         return Math.toDegrees(Math.acos(relation));
     }
+
     public static double atan(double relation){
         return Math.toDegrees(Math.atan(relation));
     }
@@ -54,11 +53,26 @@ public class K {
 
         if(val>1 && val<1.01)
             val =1;
-        else if(val<-11 && val>-1.01)
+        else if(val<-1 && val>-1.01)
             val =-1;
 
         return Math.toDegrees(Math.acos((val)));
     }
 
+    public static InverseKinematicResult getAnglesFor(double x, double y, double l1, double l2){
+        //http://roboty6.narod.ru/inverseKinematics.htm
+
+        double radiusVector = getLength(l1, l2);
+
+        double bendAngle =  getAngle(radiusVector, l1, l2);
+
+        double q2 = getAngle(l2,l1,radiusVector);
+
+        double q1 = x==0
+                ?(x<0?180:0)
+                :K.atan(y/x);
+
+        return new InverseKinematicResult(q1+q2, bendAngle);
+    }
 }
 

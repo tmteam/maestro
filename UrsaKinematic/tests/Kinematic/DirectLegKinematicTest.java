@@ -7,6 +7,48 @@ import org.junit.jupiter.api.Test;
  * Created by Su on 16/03/17.
  */
 public class DirectLegKinematicTest extends LegTestBase {
+    @Test
+    void b2MoreThat180_yIsNegative(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                90, 180, 185));
+        Assertions.assertTrue(point.y<0,"point.y should be negative but equals "+ point.y);
+    }
+    @Test
+    void b2LessThat180_yIsPositive(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                90, 180, 175));
+        Assertions.assertTrue(point.y>0,"point.y should be positive but equals "+ point.y);
+    }
+    @Test
+    void t0IsNegative_m1Andb1Equal180_pointYEquals0(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                -20, 180, 180));
+        Assertions.assertEquals(0,point.y,0.01);
+    }
+    @Test
+    void t0MoreThan270_m1Andb1Equal180_pointYEquals0(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                280, 180, 180));
+        Assertions.assertEquals(0,point.y,0.01);
+    }
+    @Test
+    void t0MoreThan180_m1Andb1Equal180_pointYEquals0(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                190, 180, 180));
+        Assertions.assertEquals(0,point.y,0.01);
+    }
+    @Test
+    void t0MoreThan90_m1Andb1Equal180_pointYEquals0(){
+        Leg leg = CreateLeg();
+        DimensionPoint point = leg.toPoint(new LegAngles(
+                130, 180, 180));
+        Assertions.assertEquals(0,point.y,0.01);
+    }
 
     @Test
     void m1Andb1Equal180_pointYEquals0(){
@@ -79,7 +121,7 @@ public class DirectLegKinematicTest extends LegTestBase {
                 + leg.getSettings().getMiddleLength()
                         + leg.getSettings().getBottomLength();
 
-        Assertions.assertEquals(legLenght, point.y,0.01);
+        Assertions.assertEquals(-legLenght, point.y,0.01);
     }
 
     @Test
