@@ -33,7 +33,6 @@ public class KGetAnglesTest {
     void getAngles_FoldToRight_baseEquals0(){
         AssertBaseAngle(l1-l2,0,0);
     }
-
     @Test
     void getAngles_FoldToRight_bendEquals0(){
         AssertBendAngle(l1-l2,0,0);
@@ -43,7 +42,6 @@ public class KGetAnglesTest {
     void getAngles_FoldToLeft_baseEquals180(){
         AssertBaseAngle(-l1+l2,0,180);
     }
-
     @Test
     void getAngles_FoldToLeft_bendEquals0(){
         AssertBendAngle(-l1+l2,0,0);
@@ -72,25 +70,21 @@ public class KGetAnglesTest {
     void getAngles_LineToRight_baseEquals0(){
         AssertBaseAngle(l1+l2,0,0);
     }
-
     @Test
     void getAngles_LineToRight_bendEquals180(){
         AssertBendAngle(l1+l2,0,180);
     }
 
-
-
     @Test
     void getAngles_LineToLeft_baseEquals180(){
         AssertBaseAngle(-(l1+l2),0,180);
     }
-
     @Test
     void getAngles_LineToLeft_bendEquals180(){
        AssertBendAngle(-(l1+l2),0,180);
     }
 
-    //l2 than l1
+    //l2 then l1
     @Test // bend i- +
     void getAngles_VerticalUpLeftStraight_bendEquals270(){
         AssertBendAngle(-l2,+l1,270);
@@ -108,6 +102,7 @@ public class KGetAnglesTest {
     void getAngles_VerticalDownleft_baseEquals270(){
         AssertBaseAngle(-l2,-l1,270);
     }
+
     @Test // bend i+ -
     void getAngles_VerticalDownRightStraight_bendEquals270(){
         AssertBendAngle(l2,-l1,270);
@@ -116,7 +111,6 @@ public class KGetAnglesTest {
     void getAngles_VerticalDownRightStraight_baseEquals270(){
         AssertBaseAngle(l2,-l1,270,false);
     }
-
 
     @Test // bend i+ +
     void getAngles_VerticalStraight_bendEquals90(){
@@ -127,15 +121,11 @@ public class KGetAnglesTest {
         AssertBaseAngle(l2,l1,90);
     }
 
-
-    // l1 than l2
-
-
+    // l1 then l2
     @Test // base - -
     void getAngles_VerticalStraightLeft_baseEquals180(){
         AssertBaseAngle(-l1,-l2,180,false);
     }
-
     @Test //bend - -
     void getAngles_VerticalStraightLeft_bendEquals270(){
         AssertBendAngle(-l1,-l2,270);
@@ -145,7 +135,6 @@ public class KGetAnglesTest {
     void getAngles_HorizontalStraightDown_baseEquals0(){
         AssertBaseAngle(l1,-l2,0);
     }
-
     @Test //bend + -
     void getAngles_HorizontalStraight_bendEquals90(){
         AssertBendAngle(l1,-l2,90);
@@ -156,7 +145,6 @@ public class KGetAnglesTest {
     void getAngles_HorizontalStraight_baseEquals0(){
         AssertBaseAngle(l1,l2,0,false);
     }
-
     @Test //bend + +
     void getAngles_HorizontalStraight_bendEquals270(){
         AssertBendAngle(l1,l2,270);
@@ -166,25 +154,24 @@ public class KGetAnglesTest {
     void getAngles_HorizontalStraightLeft_baseEquals180(){
         AssertBaseAngle(-l1,l2, 180);
     }
-
     @Test //bend - +
     void getAngles_HorizontalStraightLeft_bendEquals90(){
         AssertBendAngle(-l1, l2, 90);
     }
 
-    void  AssertBendAngle(double x, double y, double expectedAngle){
+
+
+    private void  AssertBendAngle(double x, double y, double expectedAngle){
         Assertions.assertEquals(expectedAngle,
                K.NormalizeAngle(K.getAnglesFor(x, y, l1,l2,
                        expectedAngle<=180).bendAngle),0.01);
-
     }
-    void  AssertBaseAngle(double x, double y, double expectedAngle) {
+    private void  AssertBaseAngle(double x, double y, double expectedAngle) {
         AssertBaseAngle(x,y,expectedAngle,true);
     }
 
-    void  AssertBaseAngle(double x, double y, double expectedAngle, boolean bendAngleLessThan180){
+    private void  AssertBaseAngle(double x, double y, double expectedAngle, boolean bendAngleLessThan180){
         Assertions.assertEquals(expectedAngle,
                K.NormalizeAngle(K.getAnglesFor(x, y, l1,l2,bendAngleLessThan180).baseAngle),0.01);
-
     }
 }
