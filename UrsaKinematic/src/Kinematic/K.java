@@ -5,6 +5,19 @@ package Kinematic;
  */
 public class K {
 
+    public static double NormalizeAngle(double angle){
+        if(angle>360)
+        {
+            while (angle>360)
+                angle-=360;
+            return angle;
+        }
+
+        while (angle <0)
+                angle+=360;
+        return angle;
+    }
+
     public static double asin(double relation){
         return Math.toDegrees(Math.asin(relation));
     }
@@ -16,6 +29,11 @@ public class K {
     public static double atan(double relation){
         return Math.toDegrees(Math.atan(relation));
     }
+
+    public static double atan2(double x, double y) {
+        return Math.toDegrees(Math.atan2(y, x));
+    }
+
 
     public static double sin(double angle){
         return Math.sin(Math.toRadians(angle));
@@ -48,7 +66,9 @@ public class K {
         if(lengthAgainst==0)
             return 0;
 
-        double val = (neighourALength*neighourALength + neightbourBLength*neightbourBLength - lengthAgainst*lengthAgainst)
+        double val = (neighourALength  *neighourALength
+                    + neightbourBLength*neightbourBLength
+                    - lengthAgainst    *lengthAgainst)
                 /(2*neightbourBLength*neighourALength);
 
         if(val>1 && val<1.01)
@@ -59,20 +79,39 @@ public class K {
         return Math.toDegrees(Math.acos((val)));
     }
 
-    public static InverseKinematicResult getAnglesFor(double x, double y, double l1, double l2){
+    public static InverseKinematicResult getAnglesFor(
+            double x,
+            double y,
+            double l1,
+            double l2)
+    {
+        return getAnglesFor(x,y,l1,l2,true);
+    }
+
+    public static InverseKinematicResult getAnglesFor(
+            double x,
+            double y,
+            double l1,
+            double l2,
+            boolean bendAngleIsLessThan180
+            ){
         //http://roboty6.narod.ru/inverseKinematics.htm
 
-        double radiusVector = getLength(l1, l2);
+        double radiusVector = getLength(x, y);
 
-        double bendAngle =  getAngle(radiusVector, l1, l2);
+        double originBendAngle =  getAngle(radiusVector, l1, l2);//the originBendAngle will be always less than 180
 
-        double q2 = getAngle(l2,l1,radiusVector);
+        double bendAngle = originBendAngle;
 
-        double q1 = x==0
-                ?(x<0?180:0)
-                :K.atan(y/x);
+        if(!bendAngleIsLessThan180)
+            bendAngle = 360-bendAngle;
 
-        return new InverseKinematicResult(q1+q2, bendAngle);
+
+        double q1 = K.atan2(x,y);
+
+        double q2 =  getAngle(l2,l1,radiusVector);
+
+        return new InverseKinematicResult( bendAngleIsLessThan180?(q1+q2):(q1-q2), bendAngle);
     }
 }
 
