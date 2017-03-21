@@ -6,12 +6,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Created by Su on 16/03/17.
  */
-public class ReverseLegKinematicTest extends LegTestBase {
-    @Test
-    void legIsLiftedUp(){
-        //impossible angles in real world
-        checkAnglesViaDirectKinematic(90, 290, 170);
-    }
+public class InverseLegKinematicTest extends LegTestBase {
 
     @Test
     void stancePosition(){
@@ -27,21 +22,45 @@ public class ReverseLegKinematicTest extends LegTestBase {
     void legIsPreloaded(){
         checkAnglesViaDirectKinematic(85, 85, 20);
     }
-
-    void checkAnglesViaDirectKinematic(double t0Angle, double m1Angle, double b2Angle){
+    @Test
+    void horizontalTopPosition(){
         Leg leg = CreateLeg();
-        //direct kinematic
-        DimensionPoint point =  leg.toPoint(new LegAngles(t0Angle, m1Angle, b2Angle));
-        //reverse kinematic
-        LegAngles angles = leg.toAngles(point);
 
-        Assertions.assertEquals(t0Angle, angles.t0, 0.01);
-        Assertions.assertEquals(m1Angle, angles.m1,0.01);
-        Assertions.assertEquals(b2Angle, angles.b2,0.01);
+        double legLength =
+                + leg.getSettings().getMiddleLength()
+                        + leg.getSettings().getBottomLength();
+
+        DimensionPoint point = new DimensionPoint(
+                leg.getSettings().getTopToMiddleVerticalOffset(),
+                - legLength,
+                leg.getSettings().getTopToMiddleLength());
+
+        LegAngles angles = leg.toAngles(point);
+        AssertAnglesEqual(new LegAngles(0,90,180), angles);
+
+    }
+    @Test
+    void horizontalToFrontTopPosition(){
+        Leg leg = CreateLeg();
+
+        double legLength =
+                + leg.getSettings().getMiddleLength()
+                        + leg.getSettings().getBottomLength();
+
+        DimensionPoint point = new DimensionPoint(
+                leg.getSettings().getTopToMiddleVerticalOffset(),
+                legLength,
+                leg.getSettings().getTopToMiddleLength());
+
+        LegAngles angles = leg.toAngles(point);
+        AssertAnglesEqual(new LegAngles(0,270,180), angles);
+
     }
 
+
+
     @Test //90 270 180
-    void horizontalAlongTheBodyToFront(){
+    void horizontalAlongTheBodyToBack(){
         Leg leg = CreateLeg();
 
         double legLength =
@@ -54,13 +73,11 @@ public class ReverseLegKinematicTest extends LegTestBase {
                 - leg.getSettings().getTopToMiddleVerticalOffset());
 
         LegAngles angles = leg.toAngles(point);
-        Assertions.assertEquals(90,  angles.t0,0.01);
-        Assertions.assertEquals(270, angles.m1,0.01);
-        Assertions.assertEquals(180,   angles.b2,0.01);
+        AssertAnglesEqual(new LegAngles(90,90,180), angles);
     }
 
     @Test //90 90 180
-    void horizontalAlongTheBodyToBack(){
+    void horizontalAlongTheBodyToFront(){
         Leg leg = CreateLeg();
 
         double legLength =
@@ -73,9 +90,7 @@ public class ReverseLegKinematicTest extends LegTestBase {
                 -leg.getSettings().getTopToMiddleVerticalOffset());
 
         LegAngles angles = leg.toAngles(point);
-        Assertions.assertEquals(90,  angles.t0,0.01);
-        Assertions.assertEquals(90, angles.m1,0.01);
-        Assertions.assertEquals(180,   angles.b2,0.01);
+        AssertAnglesEqual(new LegAngles(90,270,180), angles);
     }
 
     @Test //90 180 180
@@ -90,12 +105,10 @@ public class ReverseLegKinematicTest extends LegTestBase {
         DimensionPoint point = new DimensionPoint(
                 leg.getSettings().getTopToMiddleLength(),
                 0,
-                legLength);
+                -legLength);
 
         LegAngles angles = leg.toAngles(point);
-        Assertions.assertEquals(90,  angles.t0,0.01);
-        Assertions.assertEquals(180, angles.m1,0.01);
-        Assertions.assertEquals(180,   angles.b2,0.01);
+        AssertAnglesEqual(new LegAngles(90,180,180), angles);
     }
 
     @Test //0 180 180
@@ -113,9 +126,7 @@ public class ReverseLegKinematicTest extends LegTestBase {
                 leg.getSettings().getTopToMiddleLength());
 
         LegAngles angles = leg.toAngles(point);
-        Assertions.assertEquals(0,  angles.t0,0.01);
-        Assertions.assertEquals(180, angles.m1,0.01);
-        Assertions.assertEquals(180,   angles.b2,0.01);
+        AssertAnglesEqual(new LegAngles(0,180,180), angles);
     }
 
     @Test //90 180 0
@@ -132,9 +143,7 @@ public class ReverseLegKinematicTest extends LegTestBase {
                 -legHeight);
 
         LegAngles angles = leg.toAngles(point);
-        Assertions.assertEquals(90,  angles.t0,0.01);
-        Assertions.assertEquals(180, angles.m1,0.01);
-        Assertions.assertEquals(0,   angles.b2,0.01);
+        AssertAnglesEqual(new LegAngles(90,180,0), angles);
     }
 
     @Test //90 0 0
@@ -201,4 +210,26 @@ public class ReverseLegKinematicTest extends LegTestBase {
         DimensionPoint point = leg.toPoint(somePosition);
         return leg.toPositions(point);
     }
+
+    void checkAnglesViaDirectKinematic(double t0Angle, double m1Angle, double b2Angle){
+        Leg leg = CreateLeg();
+        LegAngles expected = new LegAngles(t0Angle, m1Angle, b2Angle);
+        //direct kinematic
+        DimensionPoint point =  leg.toPoint(expected);
+        //reverse kinematic
+        LegAngles actual = leg.toAngles(point);
+
+        AssertAnglesEqual(expected,actual);
+    }
+
+    void AssertAnglesEqual(LegAngles expected, LegAngles actual){
+        Assertions.assertEquals(expected.t0, actual.t0, 0.01, getAssertMessage(expected,actual));
+        Assertions.assertEquals(expected.m1, actual.m1,0.01,getAssertMessage(expected,actual));
+        Assertions.assertEquals(expected.b2, actual.b2,0.01,getAssertMessage(expected,actual));
+    }
+
+    String getAssertMessage(LegAngles expected, LegAngles actual){
+        return "Expected: "+ expected+" but was: "+ actual;
+    }
+
 }

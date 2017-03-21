@@ -87,7 +87,7 @@ public class DirectLegKinematicTest extends LegTestBase {
     @Test
     void legInVerticalPosition_pointZEqualsNegativeVerticalLegLength(){
         Leg leg = CreateLeg();
-        DimensionPoint point = leg.toPoint(leg.getVerticalPositionAngels());
+        DimensionPoint point = leg.toPoint(new LegAngles(90,180,180));
 
         double legHeight = leg.getSettings().getTopToMiddleVerticalOffset()
                 + leg.getSettings().getMiddleLength()

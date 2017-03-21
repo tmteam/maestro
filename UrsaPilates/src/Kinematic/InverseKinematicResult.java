@@ -16,4 +16,8 @@ public class InverseKinematicResult{
         this.baseAngle = baseAngle;
         this.bendAngle = bendAngle;
     }
+
+    public boolean AreActual(){
+        return !Double.isNaN(baseAngle) && !Double.isNaN(bendAngle);
+    }
 }

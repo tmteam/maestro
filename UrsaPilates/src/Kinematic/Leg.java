@@ -40,10 +40,6 @@ public class Leg {
         return settings;
     }
 
-    public LegAngles getVerticalPositionAngels(){
-       return new LegAngles(90,
-                180, 180);
-    }
 
     public LegServoPositions toPositions(DimensionPoint point){
         return toPositions(toAngles(point));
@@ -106,31 +102,34 @@ public class Leg {
         //tar = sqrt(rr-ww)-o
 
         double r = K.getLength(point.x  , point.z);
-        double w = settings.getTopToMiddleLength();
-        //итоговая длинна плеча
-        double topToMiddleConverted = K.getLength(w, settings.getTopToMiddleVerticalOffset());
+        double mid = settings.getTopToMiddleLength();
+        double vert = settings.getTopToMiddleVerticalOffset();
 
-        double leg12Y = (r>topToMiddleConverted?1:-1)* Math.sqrt(r*r - w*w)-settings.getTopToMiddleVerticalOffset();
-        double leg12X = point.y;
+        double sign = (r>=K.getLength(mid,vert))?1:-1;
 
-        //расстояние от верхней точки до пятки, по пифагору:
-        InverseKinematicResult leg12Angles = getLeg12Angles(leg12X, leg12Y);
+        double leg12Y =  sign* Math.sqrt(r*r - mid*mid) -vert;
 
+        InverseKinematicResult leg12Angles = getLeg12Angles(-point.y, -leg12Y);
+        //if results are not actual, we have plan b:
+        if(!leg12Angles.AreActual())
+        {
+            //Changing the sign to find seconf kinematic solution:
+            sign=-sign;
+            leg12Y =  sign* Math.sqrt(r*r - mid*mid) -vert;
+            leg12Angles = getLeg12Angles(-point.y, -leg12Y);
+        }
 
-        //Угол, образуемый фронтальным радус вектором
-        double totalAngle = K.acos(point.z/r);
+        double l12Angle = K.getAngle(Math.abs(vert+leg12Y),
+                r, mid);
 
-        // фронтальный угол радус вектором и нижней leg12
-        double topToMiddleConvertedAngle = K.getAngle(
-                topToMiddleConverted,
-                r,
-                Math.abs(leg12Y));
+        double radiusAngle = K.atan2(point.x,point.z);
+        //leg<0:    radius - l12
+        //leg>0:    -radius - l12
 
-        double t0Angle = totalAngle+ (leg12Y>0
-                ? (topToMiddleConvertedAngle-90)
-                : (90-topToMiddleConvertedAngle));
+        double t0Angle = 90 +(leg12Y<0?1:-1)*(radiusAngle) -  l12Angle;
 
-        return new LegAngles(t0Angle, leg12Angles.baseAngle, leg12Angles.bendAngle);
+        return new LegAngles(t0Angle,
+                K.NormalizeAngle(90 - leg12Angles.baseAngle), leg12Angles.bendAngle);
     }
 
     /**

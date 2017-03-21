@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 public class KGetAnglesTest {
     private final double l1 = 150;
     private final double l2 = 100;
+
+
     //fold
     @Test
     void getAngles_FoldToDown_baseEquals270(){
@@ -158,6 +160,7 @@ public class KGetAnglesTest {
     void getAngles_HorizontalStraightLeft_bendEquals90(){
         AssertBendAngle(-l1, l2, 90);
     }
+
 
 
 
