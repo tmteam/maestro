@@ -12,7 +12,7 @@ public class CrossSprite {
     private int width;
     private int height;
     private final int crossSize = 4;
-    private Color color = Color.black;
+    private Color color = Color.green;
 
     public void SetColor(Color color){
 
@@ -39,7 +39,6 @@ public class CrossSprite {
         g.drawLine(0, y,width, y);
         g.drawLine(x,0,x,height);
 
-        g.setColor(color);
         g.fillRect(x-crossSize,y-crossSize,2*crossSize,2*crossSize);
 
     }

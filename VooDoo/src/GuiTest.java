@@ -1,6 +1,6 @@
 
 import Cross.CrossModelMock;
-import Cross.CrossPanelController;
+import Cross.CrossPanelPresenter;
 import Cross.CrossPanelView;
 
 import javax.swing.SwingUtilities;
@@ -29,15 +29,10 @@ public class GuiTest
         f.setSize(view.getPreferredSize());
         f.setVisible(true);
 
-
-
         CrossModelMock model = new CrossModelMock();
-        model.SetCurrent(50,30);
+        model.setTarget(50,30);
 
-        CrossPanelController controller = new CrossPanelController(model);
-        controller.SetView(view);
-
-        view.SetModel(model);
+        CrossPanelPresenter presenter = new CrossPanelPresenter(model,view);
     }
 }
 

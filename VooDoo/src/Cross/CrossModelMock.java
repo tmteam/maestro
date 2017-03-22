@@ -4,8 +4,8 @@ package Cross;
  * Created by Su on 22/03/17.
  */
 public class CrossModelMock implements ICrossModel {
-    private double x;
-    private double y;
+    private double targetX;
+    private double targetY;
     private XYListener listener;
 
     @Override
@@ -29,20 +29,30 @@ public class CrossModelMock implements ICrossModel {
     }
 
     @Override
-    public void SetCurrent(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public void setTarget(double x, double y) {
+        this.targetX = x;
+        this.targetY = y;
         updateListeners();
     }
 
     @Override
+    public double getTargetX() {
+        return targetX;
+    }
+
+    @Override
+    public double getTargetY() {
+        return targetY;
+    }
+
+    @Override
     public double getCurrentX() {
-        return x/(double)2;
+        return targetX /(double)2;
     }
 
     @Override
     public double getCurrentY() {
-        return y/(double)2;
+        return targetY/(double)2;
     }
 
     @Override
@@ -54,8 +64,10 @@ public class CrossModelMock implements ICrossModel {
     }
 
     private void updateListeners() {
-        if(listener!=null)
-            listener.XYUpdated(this,getCurrentX(),getCurrentY());
+        if (listener != null) {
+            listener.currentXYUpdated(this, getCurrentX(), getCurrentY());
+            listener.targetXYUpdated(this, getTargetX(),getTargetY());
+        }
     }
 
     @Override

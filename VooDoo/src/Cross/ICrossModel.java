@@ -8,7 +8,11 @@ public interface ICrossModel{
     double getMaxX();
     double getMaxY();
 
-    void SetCurrent(double x, double y);
+    void setTarget(double x, double y);
+
+    double getTargetX();
+    double getTargetY();
+
 
     double getCurrentX();
     double getCurrentY();
