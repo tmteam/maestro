@@ -1,22 +1,54 @@
+import Cross.CrossModelMock;
+import Cross.CrossPanelPresenter;
+import Cross.CrossPanelView;
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Created by Su on 22/03/17.
  */
-public class LegGui {
+public class LegGui extends JFrame {
     private JPanel MainPanel;
     private JTextArea console;
-    private JRadioButton rb_fr;
-    private JRadioButton rb_fl;
-    private JRadioButton rb_br;
-    private JRadioButton rb_bl;
-    private JPanel chooseLeg;
     private JPanel SideViewPanel;
     private JPanel FrontViewPanel;
 
+    public JPanel getMainPanel() {
+        return MainPanel;
+    }
+
+    public CrossPanelView getSideCrossView() {
+        return (CrossPanelView) SideViewPanel;
+    }
+
+    public CrossPanelView getFrontCrossView() {
+        return (CrossPanelView) FrontViewPanel;
+    }
+
     private void createUIComponents() {
-        // TODO: place custom component creation code here
+        CrossPanelView sideCross = new CrossPanelView();
+
+        CrossModelMock sideCrossModel = new CrossModelMock();
+        sideCrossModel.setTarget(50, 30);
+        CrossPanelPresenter sideViewPresenter = new CrossPanelPresenter(sideCrossModel, sideCross);
+        SideViewPanel = sideCross;
+
+        CrossPanelView frontCross = new CrossPanelView();
+        CrossModelMock frontCrossmodel = new CrossModelMock();
+        frontCrossmodel.setTarget(50, 30);
+        CrossPanelPresenter frontViewPresenter = new CrossPanelPresenter(frontCrossmodel, frontCross);
+        FrontViewPanel = frontCross;
+    }
+
+    public JFrame createFrame() {
+        JFrame frame = new JFrame();
+        frame.setTitle("U.R.S.A. VooDoo leg controller");
+        frame.setContentPane(MainPanel);
+        frame.setMinimumSize(new Dimension(300, 300));
+        frame.setSize(MainPanel.getPreferredSize());
+        return frame;
     }
 
     {
@@ -34,14 +66,14 @@ public class LegGui {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        createUIComponents();
         MainPanel = new JPanel();
-        MainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
-        SideViewPanel = new JPanel();
-        SideViewPanel.setLayout(new GridBagLayout());
-        MainPanel.add(SideViewPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 100), null, null, 0, false));
-        FrontViewPanel = new JPanel();
-        FrontViewPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        MainPanel.add(FrontViewPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(-1, 100), null, null, 0, true));
+        MainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        SideViewPanel.setBackground(new Color(-6261268));
+        SideViewPanel.setEnabled(true);
+        MainPanel.add(SideViewPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 100), new Dimension(300, 300), null, 0, false));
+        FrontViewPanel.setBackground(new Color(-1302483));
+        MainPanel.add(FrontViewPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(-1, 100), new Dimension(300, 300), null, 0, true));
         final JLabel label1 = new JLabel();
         label1.setText("Side view:");
         MainPanel.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -50,28 +82,7 @@ public class LegGui {
         MainPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         console = new JTextArea();
         console.setText("");
-        MainPanel.add(console, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 100), new Dimension(-1, 100), 4, false));
-        chooseLeg = new JPanel();
-        chooseLeg.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
-        MainPanel.add(chooseLeg, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        chooseLeg.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Leg"));
-        rb_fr = new JRadioButton();
-        rb_fr.setText("FR");
-        chooseLeg.add(rb_fr, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        rb_fl = new JRadioButton();
-        rb_fl.setText("FL");
-        chooseLeg.add(rb_fl, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        rb_bl = new JRadioButton();
-        rb_bl.setLabel("BL");
-        rb_bl.setText("BL");
-        chooseLeg.add(rb_bl, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        rb_br = new JRadioButton();
-        rb_br.setActionCommand("BR");
-        rb_br.setText("BR");
-        chooseLeg.add(rb_br, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("Label");
-        MainPanel.add(label3, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        MainPanel.add(console, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 100), new Dimension(-1, 100), 0, false));
     }
 
     /**

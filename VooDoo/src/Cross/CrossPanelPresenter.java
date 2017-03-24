@@ -4,52 +4,42 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * Created by Su on 22/03/17.
- */
+
 public class CrossPanelPresenter {
 
     private CrossPanelView view;
     private ICrossModel model;
+    private int cursorX;
+    private int cursorY;
 
     public CrossPanelPresenter(ICrossModel model,CrossPanelView view){
-        SetView(view);
-        SetModel(model);
+        setView(view);
+        setModel(model);
     }
 
-    private void SetModel(ICrossModel model){
+    private void setModel(ICrossModel model){
 
         this.model = model;
         this.model.addXYListener(new XYListener() {
             @Override
             public void currentXYUpdated(ICrossModel sender, double x, double y) {
-                view.paint(view.getCrossFeedback(),(int) convertToGx(x), (int) convertToGy(y));
-                UpdateDescription();
+                view.paint(view.getCrossFeedback(),(int) toViewGx(x), (int) toViewGy(y));
+                updateDescription();
             }
 
             @Override
             public void targetXYUpdated(ICrossModel sender, double x, double y) {
-                view.paint(view.getCross(),(int) convertToGx(x), (int) convertToGy(y));
-                UpdateDescription();
+                view.paint(view.getCross(),(int) toViewGx(x), (int) toViewGy(y));
+                updateDescription();
 
             }
         });
-        view.paint(view.getCrossFeedback(),(int) convertToGx(model.getCurrentX()), (int) convertToGy(model.getCurrentY()));
-        view.paint(view.getCross(),(int) convertToGx(model.getTargetX()), (int) convertToGy(model.getTargetY()));
-        UpdateDescription();
+        view.paint(view.getCrossFeedback(),(int) toViewGx(model.getCurrentX()), (int) toViewGy(model.getCurrentY()));
+        view.paint(view.getCross(),(int) toViewGx(model.getTargetX()), (int) toViewGy(model.getTargetY()));
+        updateDescription();
     }
 
-    private int cursorX;
-    private int cursorY;
-
-    private void  UpdateDescription(){
-        String description = "current: "+ (int)model.getTargetX()+", "+ (int)model.getTargetY()+"\r\n"+
-                "target : "+ (int)model.getCurrentX()+", "+ (int)model.getCurrentY()+"\r\n"+
-                "cursor : "+ cursorX+", "+ cursorY;
-        view.SetDescription(description);
-
-    }
-    private void  SetView(CrossPanelView view){
+    private void setView(CrossPanelView view){
         this.view = view;
         view.getCrossFeedback().SetColor(Color.lightGray);
         view.addMouseListener(new MouseAdapter() {
@@ -62,14 +52,24 @@ public class CrossPanelPresenter {
         });
 
     }
-    void  mouseMove(MouseEvent e){
+
+    private void  mouseMove(MouseEvent e){
         cursorX = (int)toModelX(e.getX());
         cursorY = (int)toModelY(e.getY());
-        UpdateDescription();
+        updateDescription();
     }
-    void mouseDrag(MouseEvent e){
+
+    private void  mouseDrag(MouseEvent e){
         model.setTarget(toModelX(e.getX()),toModelY(e.getY()));
         mouseMove(e);
+    }
+
+    private void updateDescription(){
+        String description = "current: "+ (int)model.getTargetX()+", "+ (int)model.getTargetY()+"\r\n"+
+                "target  : "+ (int)model.getCurrentX()+", "+ (int)model.getCurrentY()+"\r\n"+
+                "cursor : "+ cursorX+", "+ cursorY;
+        view.SetDescription(description);
+
     }
 
     private double toModelY(int gy) {
@@ -80,7 +80,7 @@ public class CrossPanelPresenter {
         return model.getMinX()   + (gx/(double)view.getWidth())*(model.getMaxX()- model.getMinX());
     }
 
-    private double convertToGx(double x){
+    private double toViewGx(double x){
         double minX = model.getMinX();
         double maxX = model.getMaxX();
 
@@ -95,7 +95,7 @@ public class CrossPanelPresenter {
         return width * ((x-minX)/(maxX-minX));
     }
 
-    private double convertToGy(double y){
+    private double toViewGy(double y){
         double minY = model.getMinY();
         double maxY = model.getMaxY();
 
