@@ -2,8 +2,6 @@ package Settings;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tmteam.jamaestro.settings.ChannelSettings;
-import com.tmteam.jamaestro.settings.Settings;
 
 import java.io.IOException;
 import java.io.Reader;

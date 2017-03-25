@@ -5,9 +5,9 @@ import com.tmteam.jamaestro.api.SerialMode;
 
 import java.util.Map;
 
-public class Settings {
+public class MaestroSettings {
 
-    public static Settings CreateDefault(){return new Settings();}
+    public static MaestroSettings CreateDefault(){return new MaestroSettings();}
 
     public static int frequencyToPeriod(double hertz, int servos) {
         return (int) (hertz / (servos * (256D / 12D)));
@@ -92,7 +92,7 @@ public class Settings {
     // range, neutral, min, max.
     private Map<Integer, ChannelSettings> channels;
 
-    public Settings()
+    public MaestroSettings()
     {
         servoMultiplier = 1;
         miniMaestroServoPeriod = 80000;
@@ -172,7 +172,7 @@ public class Settings {
 
     @Override
     public String toString() {
-        return "Settings{" +
+        return "MaestroSettings{" +
                 "servosAvailable=" + servosAvailable +
                 ", servoPeriod=" + servoPeriod +
                 ", serialMode=" + serialMode +
@@ -240,7 +240,7 @@ public class Settings {
         this.enablePullups = enablePullups;
     }
 
-    public boolean isSimilarTo(Settings settings){
+    public boolean isSimilarTo(MaestroSettings settings){
         if(settings.getBaudRate()!= getBaudRate())
             return false;
         if(settings.getDeviceNumber()!= getDeviceNumber())

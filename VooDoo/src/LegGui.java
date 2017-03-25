@@ -14,10 +14,12 @@ public class LegGui extends JFrame {
     private JTextArea console;
     private JPanel SideViewPanel;
     private JPanel FrontViewPanel;
+    private JScrollPane consoleScrollPane;
 
     public JPanel getMainPanel() {
         return MainPanel;
     }
+
 
     public CrossPanelView getSideCrossView() {
         return (CrossPanelView) SideViewPanel;
@@ -40,9 +42,19 @@ public class LegGui extends JFrame {
         frontCrossmodel.setTarget(50, 30);
         CrossPanelPresenter frontViewPresenter = new CrossPanelPresenter(frontCrossmodel, frontCross);
         FrontViewPanel = frontCross;
+
+        console = new JTextArea();
+        console.setEditable(false);
+        console.setLineWrap(true);
+    }
+
+    public void appendLogMessage(String message) {
+        console.append(message);
+        console.setCaretPosition(console.getDocument().getLength());
     }
 
     public JFrame createFrame() {
+
         JFrame frame = new JFrame();
         frame.setTitle("U.R.S.A. VooDoo leg controller");
         frame.setContentPane(MainPanel);
@@ -80,9 +92,9 @@ public class LegGui extends JFrame {
         final JLabel label2 = new JLabel();
         label2.setText("Front view:");
         MainPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        console = new JTextArea();
-        console.setText("");
-        MainPanel.add(console, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 100), new Dimension(-1, 100), 0, false));
+        consoleScrollPane = new JScrollPane();
+        MainPanel.add(consoleScrollPane, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        consoleScrollPane.setViewportView(console);
     }
 
     /**

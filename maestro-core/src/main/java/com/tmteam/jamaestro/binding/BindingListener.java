@@ -1,5 +1,4 @@
-import com.tmteam.jamaestro.binding.AsyncBindingListener;
-import com.tmteam.jamaestro.binding.DriverBinding;
+package com.tmteam.jamaestro.binding;
 
 /**
  * Created by Su on 11/03/17.

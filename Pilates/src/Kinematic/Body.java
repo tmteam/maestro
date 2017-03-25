@@ -3,7 +3,7 @@ package Kinematic;
 import Settings.BodyKinematicSettings;
 import Settings.LegBindingSettings;
 import Settings.LegSettings;
-import com.tmteam.jamaestro.settings.Settings;
+import com.tmteam.jamaestro.settings.MaestroSettings;
 
 /**
  * Created by Su on 15/03/17.
@@ -26,7 +26,7 @@ public class Body {
         int channel1 = legSettings.getMiddle_1().getChannel();
         int channel2 = legSettings.getBottom_2().getChannel();
 
-        Settings maestro = settings.getMaestro();
+        MaestroSettings maestro = settings.getMaestro();
         return  new LegBinding(legBindingSettings,
                 maestro.getChannel(channel0),
                 maestro.getChannel(channel1),

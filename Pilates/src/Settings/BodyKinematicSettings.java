@@ -2,7 +2,7 @@ package Settings;
 
 
 import com.tmteam.jamaestro.settings.ChannelSettings;
-import com.tmteam.jamaestro.settings.Settings;
+import com.tmteam.jamaestro.settings.MaestroSettings;
 
 /**
  * Created by Su on 14/03/17.
@@ -10,7 +10,7 @@ import com.tmteam.jamaestro.settings.Settings;
 public class BodyKinematicSettings {
 
     public BodyKinematicSettings(){
-        maestro = new Settings();
+        maestro = new MaestroSettings();
 
         for(int i = 0; i<12; i++){
             maestro.AddChannel(i, new ChannelSettings());
@@ -22,7 +22,7 @@ public class BodyKinematicSettings {
         backRightLeg = new LegBindingSettings();
     }
 
-    private com.tmteam.jamaestro.settings.Settings maestro;
+    private com.tmteam.jamaestro.settings.MaestroSettings maestro;
 
     private LegBindingSettings frontRightLeg;
     private LegBindingSettings backRightLeg;
@@ -45,7 +45,7 @@ public class BodyKinematicSettings {
         return backRightLeg;
     }
 
-    public Settings getMaestro() {
+    public MaestroSettings getMaestro() {
         return maestro;
     }
 }

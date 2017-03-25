@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.tmteam.jamaestro.api.*;
 import com.tmteam.jamaestro.binding.DriverBinding;
 import com.tmteam.jamaestro.settings.ChannelSettings;
-import com.tmteam.jamaestro.settings.Settings;
+import com.tmteam.jamaestro.settings.MaestroSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,13 +44,13 @@ public class MaestroServoController implements Closeable {
     protected final String serialNumber;
     protected final String firmwareVersion;
 
-    protected Settings settings;
+    protected MaestroSettings settings;
 
     public MaestroServoController(DriverBinding driver) {
-        this (driver, Settings.CreateDefault());
+        this (driver, MaestroSettings.CreateDefault());
     }
 
-    public MaestroServoController(DriverBinding driver, Settings settings) {
+    public MaestroServoController(DriverBinding driver, MaestroSettings settings) {
         final Optional<Product> product = Product.fromId(driver.getVendorId(), driver.getProductId());
         if (!product.isPresent())
             throw new RuntimeException("Attempting to connect to unrecognised device");
@@ -77,7 +77,7 @@ public class MaestroServoController implements Closeable {
         return product;
     }
 
-    public Settings getSettings() {
+    public MaestroSettings getSettings() {
         return settings;
     }
 
@@ -109,7 +109,7 @@ public class MaestroServoController implements Closeable {
         conn.send(Request.SET_PARAMETER, value, index);
     }
 
-    public void updateSettings(Settings settings) {
+    public void updateSettings(MaestroSettings settings) {
         this.settings = settings;
 
         LOG.info("Applying settings: " + settings);

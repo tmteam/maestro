@@ -13,10 +13,8 @@ public interface ICrossModel{
     double getTargetX();
     double getTargetY();
 
-
     double getCurrentX();
     double getCurrentY();
 
     void addXYListener(XYListener listener);
-    void removeXYListener(XYListener listener);
 }

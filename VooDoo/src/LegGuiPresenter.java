@@ -5,9 +5,10 @@ import Cross.ICrossModel;
  * Created by Su on 24/03/17.
  */
 public class LegGuiPresenter {
-    private UiLog log;
+    private UILog log;
     private final LegGui view;
     private final LegGuiModel model;
+
     private CrossPanelPresenter sideCrossPresenter;
     private CrossPanelPresenter frontCrossPresenter;
 
@@ -18,7 +19,8 @@ public class LegGuiPresenter {
     }
 
     public void Run() {
-        log = new UiLog();
+        createLog();
+
         model.setLog(log);
         model.connect();
 
@@ -30,6 +32,12 @@ public class LegGuiPresenter {
         ICrossModel frontCrossModel =  this.model.getFrontCrossModel();
         frontCrossPresenter = new CrossPanelPresenter(frontCrossModel,view.getFrontCrossView());
 
-        log.writeMessage("Ready to vudu...");
+        log.writeMessage("Ready to vudu");
+    }
+
+    private void createLog() {
+        log = new UILog();
+        log.writeMessage("log initialized");
+        log.SetUi(view);
     }
 }

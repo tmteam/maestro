@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ControlServos {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Settings settings = Serializer.readSettings("set.json");
+        MaestroSettings settings = Serializer.readSettings("set.json");
 
         Product mini24 = Product.MINI24;
 

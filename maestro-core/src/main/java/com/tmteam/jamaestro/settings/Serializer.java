@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public class Serializer {
 
-    public static Settings readSettings(String jsonPath) throws IOException {
+    public static MaestroSettings readSettings(String jsonPath) throws IOException {
 
         String text;
 
@@ -24,10 +24,10 @@ public class Serializer {
         String text = serialize(obj);
         Files.write(Paths.get(jsonPath), text.getBytes());
     }
-    public static Settings deserializeSettings(String json){
+    public static MaestroSettings deserializeSettings(String json){
         Reader reader = new StringReader(json);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.fromJson(json, Settings.class);
+        return gson.fromJson(json, MaestroSettings.class);
     }
 
     public static ChannelSettings deserializeChannelSettings(String json){

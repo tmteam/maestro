@@ -3,6 +3,7 @@ import Settings.BodyKinematicSettings;
 import Settings.Serializer;
 import com.tmteam.jamaestro.MaestroServoController;
 import com.tmteam.jamaestro.api.Product;
+import com.tmteam.jamaestro.binding.BindingListener;
 import com.tmteam.jamaestro.binding.DriverBinding;
 import com.tmteam.jamaestro.binding.LibUsbDriverBinding;
 

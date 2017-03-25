@@ -1,5 +1,9 @@
+import Kinematic.Body;
+import Settings.BodyKinematicSettings;
+import Settings.Serializer;
+
 import javax.swing.*;
-import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by Su on 24/03/17.
@@ -10,9 +14,12 @@ public class StartupPoint {
          * Launch the application.
          29
          */
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException {
 
-            LegGuiModel model = new LegGuiModel();
+            BodyKinematicSettings bodySettings = Serializer.readSettings("bodyKinematic.json");
+            Body body = new Body(bodySettings);
+
+            LegGuiModel model = new LegGuiModel(body.getFrontRightLeg().getLeg(), bodySettings.getMaestro());
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {

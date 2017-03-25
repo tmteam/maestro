@@ -70,7 +70,7 @@ public class CrossModelMock implements ICrossModel {
         }
     }
 
-    @Override
+
     public void removeXYListener(XYListener listener) {
         this.listener = null;
     }

@@ -26,7 +26,7 @@ class SerializerTest {
     }
     @Test
     void originAndDeserializedSettingsFields_areEqual(){
-        Settings origin = new Settings();
+        MaestroSettings origin = new MaestroSettings();
 
         origin.setBaudRate(100);
         origin.setDeviceNumber(5);
@@ -36,14 +36,14 @@ class SerializerTest {
 
         String serialized = Serializer.serialize(origin);
 
-        Settings restored = Serializer.deserializeSettings(serialized);
+        MaestroSettings restored = Serializer.deserializeSettings(serialized);
 
         Assertions.assertTrue(origin.isSimilarTo(restored));
     }
 
     @Test
     void originAndDeserializedSettingsChannels_areEqual(){
-        Settings origin = new Settings();
+        MaestroSettings origin = new MaestroSettings();
 
 
         ChannelSettings channel1 = new ChannelSettings();
@@ -66,7 +66,7 @@ class SerializerTest {
 
         String serialized = Serializer.serialize(origin);
 
-        Settings restored = Serializer.deserializeSettings(serialized);
+        MaestroSettings restored = Serializer.deserializeSettings(serialized);
 
         Assertions.assertTrue(origin.isSimilarTo(restored));
     }
