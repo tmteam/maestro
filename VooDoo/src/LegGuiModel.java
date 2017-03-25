@@ -1,6 +1,7 @@
 import Cross.*;
 import Kinematic.DimensionPoint;
 import Kinematic.Leg;
+import Kinematic.LegAngles;
 import Settings.LegSettings;
 import com.tmteam.jamaestro.MaestroServoController;
 import com.tmteam.jamaestro.api.Product;
@@ -59,12 +60,22 @@ public class LegGuiModel {
     void setTarget(DimensionPoint point){
         targetPoint = point;
 
-        if(sideCross.getTargetX()!= point.y || sideCross.getTargetY()!= point.z)
-            sideCross.setTarget(point.y,point.z);
+        sideCross.setTarget(point.y,point.z);
+        frontCross.setTarget(point.x,point.z);
 
-        if(frontCross.getTargetX()!= point.x || frontCross.getTargetY()!= point.z)
-            frontCross.setTarget(point.x,point.z);
+        LegAngles originAngles = leg.toAngles(targetPoint);
+
+        LegAngles angles = correctT0Range(originAngles);
+        angles = correctM1Range(angles);
+        angles = correctB2Range(angles);
+
+        DimensionPoint currentPosition = leg.toPoint(angles);
+        sideCross.setCurrent(currentPosition.y,currentPosition.z);
+        frontCross.setCurrent(currentPosition.x,currentPosition.z);
+
+
     }
+
 
 
     public boolean isConnected(){
@@ -96,4 +107,36 @@ public class LegGuiModel {
         log.writeMessage("log setted");
 
     }
+
+    private LegAngles correctT0Range(LegAngles angles) {
+        double minT0= leg.getServoT0().getServoSettings().getMinValue();
+        double maxT0= leg.getServoT0().getServoSettings().getMaxValue();
+        if(angles.t0<minT0)
+            return new LegAngles(minT0, angles.m1, angles.b2);
+        else if(angles.t0>maxT0)
+            return new LegAngles(maxT0, angles.m1, angles.b2);
+        else
+            return angles;
+    }
+    private LegAngles correctM1Range(LegAngles angles) {
+        double minM1= leg.getServoM1().getServoSettings().getMinValue();
+        double maxM1= leg.getServoM1().getServoSettings().getMaxValue();
+        if(angles.m1<minM1)
+            return new LegAngles(angles.t0, minM1, angles.b2);
+        else if(angles.m1>maxM1)
+            return new LegAngles(angles.t0, maxM1, angles.b2);
+        else
+            return angles;
+    }
+    private LegAngles correctB2Range(LegAngles angles) {
+        double minB2= leg.getServoB2().getServoSettings().getMinValue();
+        double maxB2= leg.getServoB2().getServoSettings().getMaxValue();
+        if(angles.b2<minB2)
+            return new LegAngles(angles.t0, angles.m1, minB2);
+        else if(angles.b2>maxB2)
+            return new LegAngles(angles.t0, angles.m1, maxB2);
+        else
+            return angles;
+    }
+
 }
