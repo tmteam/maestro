@@ -1,7 +1,5 @@
-import Cross.CrossModelMock;
-import Cross.FrontCrossModel;
-import Cross.ICrossModel;
-import Cross.SideCrossModel;
+import Cross.*;
+import Kinematic.DimensionPoint;
 import Kinematic.Leg;
 import Settings.LegSettings;
 import com.tmteam.jamaestro.MaestroServoController;
@@ -20,20 +18,54 @@ public class LegGuiModel {
     private Leg leg;
     private MaestroSettings maestroSettings;
     private MaestroServoController controller;
+    private SideCrossModel sideCross;
+    private FrontCrossModel frontCross;
+    private DimensionPoint targetPoint = new DimensionPoint(0,0,0);
 
     public LegGuiModel(Leg leg, MaestroSettings maestroSettings) {
         this.leg = leg;
         this.maestroSettings = maestroSettings;
+        sideCross = new SideCrossModel(leg);
+
+        frontCross =  new FrontCrossModel(leg);
+
+        setTarget(targetPoint);
+        sideCross.addXYListener(new XYListener() {
+            @Override
+            public void targetXYUpdated(ICrossModel sender, double x, double y) {
+                setTarget(new DimensionPoint(targetPoint.x,x,y));
+            }
+        });
+
+        frontCross.addXYListener(new XYListener() {
+            @Override
+            public void targetXYUpdated(ICrossModel sender, double x, double y) {
+                setTarget(new DimensionPoint(x,targetPoint.y,y));
+            }
+        });
+
     }
 
     public ICrossModel getSideCrossModel(){
 
-        return new SideCrossModel(leg);
+        return sideCross;
     }
 
     public ICrossModel getFrontCrossModel(){
-        return new FrontCrossModel(leg);
+
+        return frontCross;
     }
+
+    void setTarget(DimensionPoint point){
+        targetPoint = point;
+
+        if(sideCross.getTargetX()!= point.y || sideCross.getTargetY()!= point.z)
+            sideCross.setTarget(point.y,point.z);
+
+        if(frontCross.getTargetX()!= point.x || frontCross.getTargetY()!= point.z)
+            frontCross.setTarget(point.x,point.z);
+    }
+
 
     public boolean isConnected(){
         return  false;
