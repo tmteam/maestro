@@ -184,10 +184,10 @@
         "maxSpeed": 0.0,
         "channel": 2
       },
-      "topToMiddleVerticalOffset": 0.0,
-      "topToMiddleLength": 0.0,
-      "middleLength": 0.0,
-      "bottomLength": 0.0
+      "topToMiddleVerticalOffset": 10.0,
+      "topToMiddleLength": 25.0,
+      "middleLength": 70.0,
+      "bottomLength": 80.0
     },
     "frontAngle": 0.0,
     "rightAngle": 0.0,

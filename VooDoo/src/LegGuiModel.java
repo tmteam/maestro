@@ -1,5 +1,7 @@
 import Cross.CrossModelMock;
+import Cross.FrontCrossModel;
 import Cross.ICrossModel;
+import Cross.SideCrossModel;
 import Kinematic.Leg;
 import Settings.LegSettings;
 import com.tmteam.jamaestro.MaestroServoController;
@@ -25,11 +27,12 @@ public class LegGuiModel {
     }
 
     public ICrossModel getSideCrossModel(){
-        return new CrossModelMock();
+
+        return new SideCrossModel(leg);
     }
 
     public ICrossModel getFrontCrossModel(){
-        return new CrossModelMock();
+        return new FrontCrossModel(leg);
     }
 
     public boolean isConnected(){
@@ -39,7 +42,6 @@ public class LegGuiModel {
         log.writeMessage("connection start");
 
         BindingListener listener = new BindingListener();
-
         LibUsbDriverBinding.bindToDevice(Product.MINI24, listener);
         DriverBinding driver = listener.getBindingOrNull();
         if(driver==null){
