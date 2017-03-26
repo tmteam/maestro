@@ -11,8 +11,10 @@ public class CrossPanelPresenter {
     private ICrossModel model;
     private int cursorX;
     private int cursorY;
+    private String title;
 
-    public CrossPanelPresenter(ICrossModel model,CrossPanelView view){
+    public CrossPanelPresenter(ICrossModel model,CrossPanelView view, String title){
+        this.title = title;
         setView(view);
         setModel(model);
     }
@@ -68,7 +70,8 @@ public class CrossPanelPresenter {
     }
 
     private void updateDescription(){
-        String description = "current: "+ (int)model.getTargetX()+", "+ (int)model.getTargetY()+"\r\n"+
+        String description = title+"\r\n"+
+                "current: "+ (int)model.getTargetX()+", "+ (int)model.getTargetY()+"\r\n"+
                 "target  : "+ (int)model.getCurrentX()+", "+ (int)model.getCurrentY()+"\r\n"+
                 "cursor : "+ cursorX+", "+ cursorY;
         view.SetDescription(description);

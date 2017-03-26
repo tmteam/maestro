@@ -2,6 +2,7 @@ import Cross.*;
 import Kinematic.DimensionPoint;
 import Kinematic.Leg;
 import Kinematic.LegAngles;
+import Kinematic.LegServoPositions;
 import Settings.LegSettings;
 import com.tmteam.jamaestro.MaestroServoController;
 import com.tmteam.jamaestro.api.Product;
@@ -86,24 +87,30 @@ public class LegGuiModel {
         angles = correctM1Range(angles);
         angles = correctB2Range(angles);
 
-        DimensionPoint currentPosition = leg.toPoint(angles);
+        DimensionPoint correctedPosition = leg.toPoint(angles);
 
-        double distance = currentPosition.distanceTo(point);
+        double distance = correctedPosition.distanceTo(point);
         if(distance> 30){
             return;
         }
         else{
-            sideCross.setCurrent(currentPosition.y,currentPosition.z);
-            frontCross.setCurrent(currentPosition.x,currentPosition.z);
-            topCross.setCurrent(currentPosition.x,currentPosition.y);
-        }
+            sideCross.setCurrent(correctedPosition.y, correctedPosition.z);
+            frontCross.setCurrent(correctedPosition.x,correctedPosition.z);
+            topCross.setCurrent(correctedPosition.x,  correctedPosition.y);
 
+            if(controller!=null) {
+                LegServoPositions servoPositions = leg.toPositions(angles);
+                controller.setTarget(leg.getServoT0().getServoSettings().getChannel(), servoPositions.t0);
+                controller.setTarget(leg.getServoM1().getServoSettings().getChannel(), servoPositions.m1);
+                controller.setTarget(leg.getServoB2().getServoSettings().getChannel(), servoPositions.b2);
+            }
+        }
     }
 
 
 
     public boolean isConnected(){
-        return  false;
+        return  controller!=null;
     }
     public void connect(){
         log.writeMessage("connection start");

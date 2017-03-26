@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="LegGui">
-  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="553" height="485"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-15132391"/>
+      <foreground color="-133635"/>
+    </properties>
     <border type="none">
       <color color="-16777216"/>
     </border>
     <children>
       <grid id="e3ffb" binding="SideViewPanel" custom-create="true" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="-1" height="100"/>
             <preferred-size width="400" height="400"/>
           </grid>
@@ -27,7 +30,7 @@
       <grid id="32e7b" binding="FrontViewPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="true">
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="true">
             <minimum-size width="-1" height="100"/>
             <preferred-size width="400" height="400"/>
           </grid>
@@ -38,39 +41,27 @@
         <border type="none"/>
         <children/>
       </grid>
-      <component id="c8e53" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Side view:"/>
-        </properties>
-      </component>
-      <component id="eef08" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Front view:"/>
-        </properties>
-      </component>
       <scrollpane id="c0b8c" binding="consoleScrollPane">
         <constraints>
-          <grid row="2" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
           <component id="2dbbc" class="javax.swing.JTextArea" binding="console" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <background color="-9474193"/>
+              <foreground color="-1"/>
+              <inheritsPopupMenu value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
       <grid id="d9737" binding="TopViewPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="true">
+          <grid row="1" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="true">
             <minimum-size width="-1" height="100"/>
             <preferred-size width="400" height="400"/>
           </grid>
@@ -81,14 +72,6 @@
         <border type="none"/>
         <children/>
       </grid>
-      <component id="fbaac" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Top view:"/>
-        </properties>
-      </component>
     </children>
   </grid>
 </form>

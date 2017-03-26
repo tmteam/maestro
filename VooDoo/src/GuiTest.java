@@ -32,7 +32,7 @@ public class GuiTest
         CrossModelMock model = new CrossModelMock();
         model.setTarget(50,30);
 
-        CrossPanelPresenter presenter = new CrossPanelPresenter(model,view);
+        CrossPanelPresenter presenter = new CrossPanelPresenter(model,view,"Test view");
     }
 }
 
