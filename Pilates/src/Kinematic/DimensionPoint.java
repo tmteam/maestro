@@ -13,4 +13,19 @@ public class DimensionPoint {
         this.y = y;
         this.z = z;
     }
+
+    public DimensionPoint copy(){
+        return new DimensionPoint(x,y,z);
+    }
+    public double distanceTo(DimensionPoint point){
+        return  Math.sqrt(sqr(x-point.x)+ sqr(y- point.y) + sqr(z-point.z));
+    }
+
+    @Override
+    public String toString(){
+        return "{"+x+", "+y+", "+z+"}";
+    }
+    double sqr(double r){
+        return  r*r;
+    }
 }

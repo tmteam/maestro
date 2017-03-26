@@ -30,18 +30,10 @@ public class LegGui extends JFrame {
     }
 
     private void createUIComponents() {
-        CrossPanelView sideCross = new CrossPanelView();
 
-        CrossModelMock sideCrossModel = new CrossModelMock();
-        sideCrossModel.setTarget(50, 30);
-        CrossPanelPresenter sideViewPresenter = new CrossPanelPresenter(sideCrossModel, sideCross);
-        SideViewPanel = sideCross;
+        SideViewPanel = new CrossPanelView();
 
-        CrossPanelView frontCross = new CrossPanelView();
-        CrossModelMock frontCrossmodel = new CrossModelMock();
-        frontCrossmodel.setTarget(50, 30);
-        CrossPanelPresenter frontViewPresenter = new CrossPanelPresenter(frontCrossmodel, frontCross);
-        FrontViewPanel = frontCross;
+        FrontViewPanel = new CrossPanelView();
 
         console = new JTextArea();
         console.setEditable(false);

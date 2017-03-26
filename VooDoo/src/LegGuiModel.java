@@ -58,6 +58,9 @@ public class LegGuiModel {
     }
 
     void setTarget(DimensionPoint point){
+        //log.writeWarning("jmp "+distance+" from "+ currentPosition+" to "+ point);
+
+        DimensionPoint oldPoint = targetPoint.copy();
         targetPoint = point;
 
         sideCross.setTarget(point.y,point.z);
@@ -70,9 +73,15 @@ public class LegGuiModel {
         angles = correctB2Range(angles);
 
         DimensionPoint currentPosition = leg.toPoint(angles);
-        sideCross.setCurrent(currentPosition.y,currentPosition.z);
-        frontCross.setCurrent(currentPosition.x,currentPosition.z);
 
+        double distance = currentPosition.distanceTo(point);
+        if(distance> 30){
+            return;
+        }
+        else{
+            sideCross.setCurrent(currentPosition.y,currentPosition.z);
+            frontCross.setCurrent(currentPosition.x,currentPosition.z);
+        }
 
     }
 

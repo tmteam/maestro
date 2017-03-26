@@ -8,6 +8,9 @@ public class CrossModelMock implements ICrossModel {
     private double targetY;
     private XYListener listener;
 
+    public CrossModelMock(){
+
+    }
     @Override
     public double getMinX() {
         return 0;

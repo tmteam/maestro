@@ -29,6 +29,9 @@ public class CrossPanelPresenter {
 
             @Override
             public void targetXYUpdated(ICrossModel sender, double x, double y) {
+                if(Math.abs(sender.getTargetX()-sender.getCurrentX())>10){
+
+                }
                 view.paint(view.getCross(),(int) toViewGx(x), (int) toViewGy(y));
                 updateDescription();
 
