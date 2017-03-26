@@ -19,6 +19,7 @@ public class LegGuiModel {
     private Leg leg;
     private MaestroSettings maestroSettings;
     private MaestroServoController controller;
+    private TopCrossModel topCross;
     private SideCrossModel sideCross;
     private FrontCrossModel frontCross;
     private DimensionPoint targetPoint = new DimensionPoint(0,0,0);
@@ -29,8 +30,10 @@ public class LegGuiModel {
         sideCross = new SideCrossModel(leg);
 
         frontCross =  new FrontCrossModel(leg);
+        topCross = new TopCrossModel(leg);
 
         setTarget(targetPoint);
+
         sideCross.addXYListener(new XYListener() {
             @Override
             public void targetXYUpdated(ICrossModel sender, double x, double y) {
@@ -45,6 +48,17 @@ public class LegGuiModel {
             }
         });
 
+        topCross.addXYListener(new XYListener() {
+            @Override
+            public void targetXYUpdated(ICrossModel sender, double x, double y) {
+                setTarget(new DimensionPoint(x,y,targetPoint.z));
+            }
+        });
+
+    }
+    public ICrossModel getTopCrossModel(){
+
+        return topCross;
     }
 
     public ICrossModel getSideCrossModel(){
@@ -65,7 +79,7 @@ public class LegGuiModel {
 
         sideCross.setTarget(point.y,point.z);
         frontCross.setTarget(point.x,point.z);
-
+        topCross.setTarget(point.x,point.y);
         LegAngles originAngles = leg.toAngles(targetPoint);
 
         LegAngles angles = correctT0Range(originAngles);
@@ -81,6 +95,7 @@ public class LegGuiModel {
         else{
             sideCross.setCurrent(currentPosition.y,currentPosition.z);
             frontCross.setCurrent(currentPosition.x,currentPosition.z);
+            topCross.setCurrent(currentPosition.x,currentPosition.y);
         }
 
     }

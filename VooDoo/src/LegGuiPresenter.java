@@ -9,6 +9,7 @@ public class LegGuiPresenter {
     private final LegGui view;
     private final LegGuiModel model;
 
+    private CrossPanelPresenter topCrossPresenter;
     private CrossPanelPresenter sideCrossPresenter;
     private CrossPanelPresenter frontCrossPresenter;
 
@@ -24,14 +25,17 @@ public class LegGuiPresenter {
         model.setLog(log);
         model.connect();
 
-        log.writeMessage("Side controll initialization");
+        log.writeMessage("Side control initialization");
         ICrossModel sideCrossModel =  this.model.getSideCrossModel();
         sideCrossPresenter = new CrossPanelPresenter(sideCrossModel,view.getSideCrossView());
 
-        log.writeMessage("Front controll initialization");
+        log.writeMessage("Front control initialization");
         ICrossModel frontCrossModel =  this.model.getFrontCrossModel();
         frontCrossPresenter = new CrossPanelPresenter(frontCrossModel,view.getFrontCrossView());
 
+        log.writeMessage("Top control initialization");
+        ICrossModel topCrossModel = this.model.getTopCrossModel();
+        topCrossPresenter = new CrossPanelPresenter(topCrossModel, view.getTopCrossView());
         log.writeMessage("Ready to vudu");
     }
 

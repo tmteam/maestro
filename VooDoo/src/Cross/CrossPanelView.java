@@ -14,13 +14,13 @@ public class CrossPanelView extends JPanel {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(300,300);
+        return new Dimension(400,400);
     }
     public Dimension getMinimumSize()   {
-        return new Dimension(300,300);
+        return new Dimension(200,200);
     }
     public Dimension getMaximumSize(){
-        return new Dimension(300,300);
+        return new Dimension(500,500);
     }
 
     public void paintComponent(Graphics g) {
