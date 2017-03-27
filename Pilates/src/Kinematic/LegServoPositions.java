@@ -13,7 +13,10 @@ public class LegServoPositions {
         this.m1 = m1;
         this.b2 = b2;
     }
-
+    @Override
+    public String toString(){
+        return "{"+t0+", "+m1+", "+b2+"}";
+    }
 
 
 }

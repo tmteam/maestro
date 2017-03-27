@@ -184,10 +184,10 @@
         "maxSpeed": 0.0,
         "channel": 2
       },
-      "topToMiddleVerticalOffset": 10.0,
-      "topToMiddleLength": 25.0,
-      "middleLength": 70.0,
-      "bottomLength": 80.0
+      "topToMiddleVerticalOffset": 13.84,
+      "topToMiddleLength": 56.40,
+      "middleLength": 73.0,
+      "bottomLength": 125.0
     },
     "frontAngle": 0.0,
     "rightAngle": 0.0,
@@ -198,7 +198,7 @@
   },
   "backRightLeg": {
     "legSettings": {
-      "name": "unnamedLeg",
+      "name": "BR leg",
       "top_0": {
         "maxValue": 180.0,
         "minValue": 0.0,
@@ -220,10 +220,10 @@
         "maxSpeed": 0.0,
         "channel": 0
       },
-      "topToMiddleVerticalOffset": 0.0,
-      "topToMiddleLength": 0.0,
-      "middleLength": 0.0,
-      "bottomLength": 0.0
+      "topToMiddleVerticalOffset": 11.29,
+      "topToMiddleLength": 55.53,
+      "middleLength": 73.0,
+      "bottomLength": 125.0
     },
     "frontAngle": 0.0,
     "rightAngle": 0.0,
@@ -234,7 +234,7 @@
   },
   "backLeftLeg": {
     "legSettings": {
-      "name": "unnamedLeg",
+      "name": "BL leg",
       "top_0": {
         "maxValue": 180.0,
         "minValue": 0.0,
@@ -256,10 +256,10 @@
         "maxSpeed": 0.0,
         "channel": 0
       },
-      "topToMiddleVerticalOffset": 0.0,
-      "topToMiddleLength": 0.0,
-      "middleLength": 0.0,
-      "bottomLength": 0.0
+      "topToMiddleVerticalOffset": 11.29,
+      "topToMiddleLength": 55.53,
+      "middleLength": 73.0,
+      "bottomLength": 125.0
     },
     "frontAngle": 0.0,
     "rightAngle": 0.0,
@@ -270,7 +270,7 @@
   },
   "frontLeftLeg": {
     "legSettings": {
-      "name": "unnamedLeg",
+      "name": "FL leg",
       "top_0": {
         "maxValue": 180.0,
         "minValue": 0.0,
@@ -292,10 +292,10 @@
         "maxSpeed": 0.0,
         "channel": 0
       },
-      "topToMiddleVerticalOffset": 0.0,
-      "topToMiddleLength": 0.0,
-      "middleLength": 0.0,
-      "bottomLength": 0.0
+      "topToMiddleVerticalOffset": 13.84,
+      "topToMiddleLength": 56.4,
+      "middleLength": 73.0,
+      "bottomLength": 125.0
     },
     "frontAngle": 0.0,
     "rightAngle": 0.0,

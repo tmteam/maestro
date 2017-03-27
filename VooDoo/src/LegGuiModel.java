@@ -98,8 +98,12 @@ public class LegGuiModel {
             frontCross.setCurrent(correctedPosition.x,correctedPosition.z);
             topCross.setCurrent(correctedPosition.x,  correctedPosition.y);
 
+            LegServoPositions servoPositions = leg.toPositions(angles);
+            if(log!=null)
+            log.writeMessage("mov "+ servoPositions);
+
             if(controller!=null) {
-                LegServoPositions servoPositions = leg.toPositions(angles);
+
                 controller.setTarget(leg.getServoT0().getServoSettings().getChannel(), servoPositions.t0);
                 controller.setTarget(leg.getServoM1().getServoSettings().getChannel(), servoPositions.m1);
                 controller.setTarget(leg.getServoB2().getServoSettings().getChannel(), servoPositions.b2);
