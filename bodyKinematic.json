@@ -19,7 +19,7 @@
         "homeMode": "OFF",
         "home": 6000,
         "minimum": 2432,
-        "maximum": 8000,
+        "maximum": 8576,
         "neutral": 6000,
         "range": 1905,
         "speed": 0,
@@ -30,8 +30,8 @@
         "channelMode": "SERVO",
         "homeMode": "OFF",
         "home": 6000,
-        "minimum": 1472,
-        "maximum": 9984,
+        "minimum": 3908,
+        "maximum": 10096,
         "neutral": 6000,
         "range": 1905,
         "speed": 0,
@@ -42,7 +42,7 @@
         "channelMode": "SERVO",
         "homeMode": "OFF",
         "home": 6000,
-        "minimum": 2816,
+        "minimum": 3720,
         "maximum": 9984,
         "neutral": 6000,
         "range": 1905,
@@ -164,22 +164,22 @@
     "legSettings": {
       "name": "FR leg",
       "top_0": {
-        "maxValue": 180.0,
-        "minValue": 0.0,
+        "maxValue": 154.0,
+        "minValue": 5.0,
         "name": "FR-0 servo",
         "maxSpeed": 0.0,
         "channel": 0
       },
       "middle_1": {
-        "maxValue": 180.0,
-        "minValue": 0.0,
+        "maxValue": 200.0,
+        "minValue": 5.0,
         "name": "FR-1 servo",
         "maxSpeed": 0.0,
         "channel": 1
       },
       "bottom_2": {
-        "maxValue": 180.0,
-        "minValue": 0.0,
+        "maxValue": 229.0,
+        "minValue": 13.0,
         "name": "FR-2 servo",
         "maxSpeed": 0.0,
         "channel": 2
