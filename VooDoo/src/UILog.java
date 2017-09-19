@@ -1,16 +1,14 @@
-import javax.swing.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by Su on 25/03/17.
  */
 public class UILog implements ILog {
-    private LegGui gui;
+    private MainGui gui;
     private String buffer = "Log start";
 
-    public void SetUi(LegGui gui){
+    public void SetUi(MainGui gui){
         this.gui = gui;
         gui.appendLogMessage(buffer);
     }

@@ -24,10 +24,10 @@ public class StartupPoint {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        LegGui windowContent = new LegGui();
+                        MainGui windowContent = new MainGui();
                         windowContent.createFrame().setVisible(true);
 
-                        LegGuiPresenter presenter = new LegGuiPresenter(windowContent,model);
+                        MainGuiPresenter presenter = new MainGuiPresenter(windowContent,model);
                         presenter.Run();
 
                     } catch (Exception e) {
@@ -38,7 +38,7 @@ public class StartupPoint {
         }
 
     private static void createAndShowGUI() {
-        LegGui mainWindow = new LegGui();
+        MainGui mainWindow = new MainGui();
         JFrame f = new JFrame("Swing Paint Demo");
 
 

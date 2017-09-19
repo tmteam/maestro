@@ -11,11 +11,7 @@ import com.tmteam.jamaestro.binding.DriverBinding;
 import com.tmteam.jamaestro.binding.LibUsbDriverBinding;
 import com.tmteam.jamaestro.settings.MaestroSettings;
 
-/**
- * Created by Su on 24/03/17.
- */
 public class LegGuiModel {
-
     private ILog log;
     private Leg leg;
     private MaestroSettings maestroSettings;
@@ -23,6 +19,8 @@ public class LegGuiModel {
     private TopCrossModel topCross;
     private SideCrossModel sideCross;
     private FrontCrossModel frontCross;
+    private String previousMovMessage = "";
+
     private DimensionPoint targetPoint = new DimensionPoint(0,0,0);
 
     public LegGuiModel(Leg leg, MaestroSettings maestroSettings) {
@@ -71,7 +69,6 @@ public class LegGuiModel {
 
         return frontCross;
     }
-
     void setTarget(DimensionPoint point){
         //log.writeWarning("jmp "+distance+" from "+ currentPosition+" to "+ point);
 
@@ -88,20 +85,30 @@ public class LegGuiModel {
         angles = correctB2Range(angles);
 
         DimensionPoint correctedPosition = leg.toPoint(angles);
-
         double distance = correctedPosition.distanceTo(point);
-        if(distance> 30){
+        if(distance> 100){
+            log.writeMessage("jmp");
             return;
         }
         else{
+
             sideCross.setCurrent(correctedPosition.y, correctedPosition.z);
             frontCross.setCurrent(correctedPosition.x,correctedPosition.z);
             topCross.setCurrent(correctedPosition.x,  correctedPosition.y);
 
             LegServoPositions servoPositions = leg.toPositions(angles);
-            if(log!=null)
-            log.writeMessage("mov "+ servoPositions);
+            if(log!=null) {
+                DimensionPoint correctedPoint = leg.toPoint(servoPositions);
+                String movMessage =  "mov " + point;
 
+                if(!correctedPoint.IsSimilarTo(point, 0))
+                    movMessage +=  "  cor: " + correctedPoint;
+
+                if(movMessage!=previousMovMessage){
+                    log.writeMessage(movMessage);
+                    previousMovMessage = movMessage;
+                }
+            }
             if(controller!=null) {
 
                 controller.setTarget(leg.getServoT0().getServoSettings().getChannel(), servoPositions.t0);
@@ -110,8 +117,6 @@ public class LegGuiModel {
             }
         }
     }
-
-
 
     public boolean isConnected(){
         return  controller!=null;
@@ -131,6 +136,10 @@ public class LegGuiModel {
             log.writeMessage("Driver connected");
         }
         controller = new MaestroServoController(driver, maestroSettings);
+        controller.setSpeed(leg.getServoT0().getServoSettings().getChannel(),0);
+        controller.setSpeed(leg.getServoM1().getServoSettings().getChannel(),0);
+        controller.setSpeed(leg.getServoB2().getServoSettings().getChannel(),0);
+
     }
 
     public ILog getLog() {

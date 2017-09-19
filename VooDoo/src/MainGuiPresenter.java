@@ -4,16 +4,16 @@ import Cross.ICrossModel;
 /**
  * Created by Su on 24/03/17.
  */
-public class LegGuiPresenter {
+public class MainGuiPresenter {
     private UILog log;
-    private final LegGui view;
+    private final MainGui view;
     private final LegGuiModel model;
 
     private CrossPanelPresenter topCrossPresenter;
     private CrossPanelPresenter sideCrossPresenter;
     private CrossPanelPresenter frontCrossPresenter;
 
-    public LegGuiPresenter(LegGui view, LegGuiModel model){
+    public MainGuiPresenter(MainGui view, LegGuiModel model){
 
         this.view = view;
         this.model = model;
@@ -24,6 +24,12 @@ public class LegGuiPresenter {
 
         model.setLog(log);
         model.connect();
+
+        ActivateLeg(model);
+    }
+
+    void ActivateLeg(LegGuiModel model){
+        model.setLog(log);
 
         log.writeMessage("Side control initialization");
         ICrossModel sideCrossModel =  this.model.getSideCrossModel();
@@ -36,7 +42,7 @@ public class LegGuiPresenter {
         log.writeMessage("Top control initialization");
         ICrossModel topCrossModel = this.model.getTopCrossModel();
         topCrossPresenter = new CrossPanelPresenter(topCrossModel, view.getTopCrossView(),"Top view");
-        log.writeMessage("Ready to vudu");
+        log.writeMessage("Leg control activated");
     }
 
     private void createLog() {

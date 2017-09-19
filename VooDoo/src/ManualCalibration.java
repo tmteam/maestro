@@ -1,15 +1,11 @@
-import Kinematic.Body;
 import Kinematic.K;
 import Kinematic.LinearKoeffs;
-import Settings.BodyKinematicSettings;
-import Settings.Serializer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.DoubleSummaryStatistics;
 
 /**
  * Created by Su on 28/03/17.
@@ -66,7 +62,7 @@ public class ManualCalibration {
     }
 
     private static void createAndShowGUI() {
-        LegGui mainWindow = new LegGui();
+        MainGui mainWindow = new MainGui();
         JFrame f = new JFrame("Swing Paint Demo");
 
 
